@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+/* Add custom theme values inline */
+@theme {
+  --color-brand: #25aff3;
+  --color-brand-light: #5cc9f7;
+  --color-brand-dark: #1989c4;
+
+  --font-sans: "Baloo 2";
+  --font-heading: "Poppins", ui-sans-serif, system-ui;
+
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-strong: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.5rem;
+}
+
+/* Global base styles */
+@layer base {
+  body {
+    @apply bg-gray-800 text-gray-300 font-sans;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+a.navs.active {
+  border-color: var(--color-brand);
+  color: var(--color-brand-light);
+}
+
+a.navs-dropdown.active {
+  color: #fff;
+  background: var(--color-brand-light);
+  &:hover {
+    background: var(--color-brand);
+  }
+}
