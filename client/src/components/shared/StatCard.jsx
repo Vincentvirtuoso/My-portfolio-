@@ -16,10 +16,12 @@ const StatCard = ({
   animateOnHover = true,
   iconPosition = "top",
   shadow = true,
+  iconBg = false,
   rounded = "rounded-xl",
   bgColor,
   borderColor,
   contentAlign = "start",
+  valueClassName,
 }) => {
   const sizeClasses = {
     xs: {
@@ -29,7 +31,7 @@ const StatCard = ({
       padding: "p-2",
     },
     sm: {
-      value: "text-xl",
+      value: "text-lg",
       label: "text-xs",
       icon: "text-xl",
       padding: "p-3",
@@ -72,7 +74,7 @@ const StatCard = ({
   }[contentAlign];
 
   const hoverAnimation = animateOnHover
-    ? { scale: 1.05, transition: { duration: 0.2 } }
+    ? { scale: 1.03, transition: { duration: 0.2 } }
     : {};
 
   const bg = bgColor || "";
@@ -96,14 +98,26 @@ const StatCard = ({
     >
       {/* Icon on left (horizontal) */}
       {Icon && direction === "horizontal" && iconPosition === "left" && (
-        <div className={clsx(sizeClasses.icon, "text-brand flex-shrink-0")}>
+        <div
+          className={clsx(
+            sizeClasses.icon,
+            iconBg ? "p-3 bg-brand/10 rounded-full" : "",
+            "text-brand flex-shrink-0"
+          )}
+        >
           <Icon />
         </div>
       )}
 
       {/* Icon on top (vertical) */}
       {Icon && direction === "vertical" && iconPosition === "top" && (
-        <div className={clsx(sizeClasses.icon, "text-brand mb-2")}>
+        <div
+          className={clsx(
+            sizeClasses.icon,
+            iconBg ? "p-3 bg-brand/10 rounded-full" : "",
+            "text-brand mb-2"
+          )}
+        >
           <Icon />
         </div>
       )}
@@ -112,7 +126,8 @@ const StatCard = ({
         <h3
           className={clsx(
             sizeClasses.value,
-            "font-bold text-brand-dark leading-tight"
+            valueClassName,
+            "font-bold text-brand leading-tight"
           )}
         >
           {value}
@@ -135,7 +150,13 @@ const StatCard = ({
       </div>
 
       {Icon && direction === "horizontal" && iconPosition === "right" && (
-        <div className={clsx(sizeClasses.icon, "text-brand flex-shrink-0")}>
+        <div
+          className={clsx(
+            sizeClasses.icon,
+            iconBg ? "p-3 bg-brand/10 rounded-full" : "",
+            "text-brand flex-shrink-0"
+          )}
+        >
           <Icon />
         </div>
       )}
