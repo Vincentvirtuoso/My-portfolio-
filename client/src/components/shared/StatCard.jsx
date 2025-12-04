@@ -1,167 +1,58 @@
-import React from "react";
-import { motion } from "framer-motion";
-import clsx from "clsx";
+import { motion } from 'framer-motion';
 
 const StatCard = ({
+  icon: Icon,
   value,
   label,
-  icon: Icon,
-  unit,
-  unitColor,
-  size = "md",
-  variant = "glass",
+  description,
+  size = "md", // sm, md, lg
+  color = "text-brand",
+  bgGradient = "from-white/5 to-transparent",
   className = "",
-  direction = "vertical",
-  align = "center",
-  animateOnHover = true,
-  iconPosition = "top",
-  shadow = true,
-  iconBg = false,
-  rounded = "rounded-xl",
-  bgColor,
-  borderColor,
-  contentAlign = "start",
-  valueClassName,
+  onClick,
+  ...rest
 }) => {
+  // Adjust padding and text size based on size prop
   const sizeClasses = {
-    xs: {
-      value: "text-md",
-      label: "text-xs",
-      icon: "text-md",
-      padding: "p-2",
-    },
-    sm: {
-      value: "text-lg",
-      label: "text-xs",
-      icon: "text-xl",
-      padding: "p-3",
-    },
-    md: {
-      value: "text-3xl",
-      label: "text-sm",
-      icon: "text-3xl",
-      padding: "p-4",
-    },
-    lg: {
-      value: "text-5xl",
-      label: "text-base",
-      icon: "text-4xl",
-      padding: "p-6",
-    },
-  }[size];
+    sm: "p-4 text-sm",
+    md: "p-6 text-base",
+    lg: "p-8 text-lg",
+  };
 
-  const variantClasses = {
-    solid: "bg-brand text-white border-transparent",
-    outline: "bg-transparent border border-brand/50 text-brand",
-    glass: "bg-white/5 border border-gray-500/30 backdrop-blur-md text-white",
-    gradient: "bg-gradient-to-br from-brand to-brand-dark text-white border-0",
-  }[variant];
+  const valueSize = {
+    sm: "text-xl",
+    md: "text-3xl",
+    lg: "text-5xl",
+  };
 
-  const layoutClasses =
-    direction === "horizontal"
-      ? "flex-row items-center gap-4"
-      : "flex-col items-center";
+  const labelSize = {
+    sm: "text-sm",
+    md: "text-lg",
+    lg: "text-xl",
+  };
 
-  const alignmentClasses = {
-    center: "justify-center text-center",
-    start: "justify-start text-left",
-    end: "justify-end text-right",
-  }[align];
-  const contentAlignmentClasses = {
-    center: "items-center",
-    start: "items-start",
-    end: "items-end",
-  }[contentAlign];
-
-  const hoverAnimation = animateOnHover
-    ? { scale: 1.03, transition: { duration: 0.2 } }
-    : {};
-
-  const bg = bgColor || "";
-  const border = borderColor || "";
+  const descSize = {
+    sm: "text-xs",
+    md: "text-sm",
+    lg: "text-base",
+  };
 
   return (
     <motion.div
-      whileHover={hoverAnimation}
-      className={clsx(
-        "flex transition-all duration-300 border-2",
-        layoutClasses,
-        alignmentClasses,
-        sizeClasses.padding,
-        variantClasses,
-        shadow && "shadow-lg shadow-black/10",
-        rounded,
-        bg,
-        border,
-        className
-      )}
+      whileHover={{ scale: 1.04 }}
+      onClick={onClick}
+      className={`bg-gradient-to-br ${bgGradient} ${sizeClasses[size]} rounded-2xl border border-gray-800/50 backdrop-blur-sm cursor-pointer ${className}`}
+      {...rest}
     >
-      {/* Icon on left (horizontal) */}
-      {Icon && direction === "horizontal" && iconPosition === "left" && (
-        <div
-          className={clsx(
-            sizeClasses.icon,
-            iconBg ? "p-3 bg-brand/10 rounded-full" : "",
-            "text-brand flex-shrink-0"
-          )}
-        >
-          <Icon />
-        </div>
-      )}
-
-      {/* Icon on top (vertical) */}
-      {Icon && direction === "vertical" && iconPosition === "top" && (
-        <div
-          className={clsx(
-            sizeClasses.icon,
-            iconBg ? "p-3 bg-brand/10 rounded-full" : "",
-            "text-brand mb-2"
-          )}
-        >
-          <Icon />
-        </div>
-      )}
-
-      <div className={clsx(contentAlignmentClasses, "flex flex-col")}>
-        <h3
-          className={clsx(
-            sizeClasses.value,
-            valueClassName,
-            "font-bold text-brand leading-tight"
-          )}
-        >
-          {value}
-          {unit && (
-            <span
-              className={clsx(
-                "text-sm align-top font-semibold ml-1",
-                unitColor || "text-brand"
-              )}
-            >
-              {unit}
-            </span>
-          )}
-        </h3>
-        <p
-          className={clsx(sizeClasses.label, "text-gray-400 mt-1 font-medium")}
-        >
-          {label}
-        </p>
+      <div className="flex items-center gap-4 mb-4">
+        {Icon && <Icon className={`${color} ${valueSize[size]}`} />}
+        <div className={`font-bold text-white ${valueSize[size]}`}>{value}</div>
       </div>
-
-      {Icon && direction === "horizontal" && iconPosition === "right" && (
-        <div
-          className={clsx(
-            sizeClasses.icon,
-            iconBg ? "p-3 bg-brand/10 rounded-full" : "",
-            "text-brand flex-shrink-0"
-          )}
-        >
-          <Icon />
-        </div>
-      )}
+      <h4 className={`font-semibold text-white mb-2 ${labelSize[size]}`}>{label}</h4>
+      {description && <p className={`text-gray-400 ${descSize[size]}`}>{description}</p>}
     </motion.div>
   );
 };
+
 
 export default StatCard;

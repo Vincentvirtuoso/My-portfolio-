@@ -1,15 +1,40 @@
 import React, { useRef, useState } from "react";
 import emailjs from "emailjs-com";
 import { motion, AnimatePresence } from "framer-motion";
-import { LuCircleCheck, LuCircleX, LuLoader } from "react-icons/lu";
+import { LuCircleCheck, LuCircleX, LuLoader, LuSend } from "react-icons/lu";
 
 const ContactForm = () => {
   const formRef = useRef();
   const [status, setStatus] = useState({ state: "idle", message: "" });
+  const [formData, setFormData] = useState({
+    user_name: "",
+    user_email: "",
+    message: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const sendEmail = async (e) => {
     e.preventDefault();
     setStatus({ state: "loading", message: "" });
+
+    // Simple validation
+    if (
+      !formData.user_name.trim() ||
+      !formData.user_email.trim() ||
+      !formData.message.trim()
+    ) {
+      setStatus({
+        state: "error",
+        message: "Please fill in all fields"
+      });
+      return;
+    }
 
     try {
       await emailjs.sendForm(
@@ -21,101 +46,162 @@ const ContactForm = () => {
 
       setStatus({
         state: "success",
-        message: "Message sent successfully!",
+        message: "Message sent successfully! I'll get back to you soon."
       });
-      formRef.current.reset();
-      setTimeout(() => setStatus({ state: "idle", message: "" }), 3000);
+
+      setFormData({ user_name: "", user_email: "", message: "" });
+
+      setTimeout(() => setStatus({ state: "idle", message: "" }), 4000);
     } catch (err) {
       console.error("EmailJS Error:", err);
       setStatus({
         state: "error",
-        message: "Failed to send message. Please try again later.",
+        message: "Failed to send message. Please try again later or email directly."
       });
       setTimeout(() => setStatus({ state: "idle", message: "" }), 4000);
     }
   };
 
   return (
-    <motion.form
-      ref={formRef}
-      onSubmit={sendEmail}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-      className="relative max-w-2xl mx-auto bg-white/5 border border-gray-600/40 p-6 rounded-xl space-y-4 overflow-hidden"
-    >
-      {/* --- Inputs --- */}
-      <div>
-        <label className="block mb-1 font-medium">Name</label>
-        <input
-          type="text"
-          name="user_name"
-          required
-          className="w-full p-3 bg-gray-800/60 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand"
-        />
-      </div>
-
-      <div>
-        <label className="block mb-1 font-medium">Email</label>
-        <input
-          type="email"
-          name="user_email"
-          required
-          className="w-full p-3 bg-gray-800/60 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand"
-        />
-      </div>
-
-      <div>
-        <label className="block mb-1 font-medium">Message</label>
-        <textarea
-          name="message"
-          rows="5"
-          required
-          className="w-full p-3 bg-gray-800/60 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand resize-none"
-        />
-      </div>
-
-      {/* --- Submit Button --- */}
-      <button
-        type="submit"
-        disabled={status.state === "loading"}
-        className="w-full flex items-center justify-center gap-2 bg-brand text-white py-3 rounded-lg font-semibold hover:bg-brand/90 transition disabled:opacity-60"
+    <div className="relative">
+      <motion.form
+        ref={formRef}
+        onSubmit={sendEmail}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true, margin: "-100px" }}
+        className="bg-gradient-to-br from-white/5 to-white/2 backdrop-blur-sm border border-gray-700/30 p-8 rounded-2xl space-y-6 shadow-2xl shadow-black/20 flex-1"
       >
-        {status.state === "loading" ? (
-          <>
-            <LuLoader className="animate-spin text-lg" /> Sending...
-          </>
-        ) : (
-          "Send Message"
-        )}
-      </button>
+        <div className="text-center mb-6">
+          <h3 className="text-2xl font-bold text-white mb-2">Send a Message</h3>
+          <p className="text-gray-400">Fill out the form below and I'll get back to you ASAP</p>
+        </div>
 
-      {/* --- Toast Notification --- */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Your Name *
+            </label>
+            <input
+              type="text"
+              name="user_name"
+              value={formData.user_name}
+              onChange={handleChange}
+              disabled={status.state === "loading"}
+              required
+              className="w-full p-4 bg-black/30 border border-gray-700/50 rounded-xl focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 text-white placeholder-gray-500 transition-all duration-300"
+              placeholder="John Doe"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              name="user_email"
+              value={formData.user_email}
+              onChange={handleChange}
+              disabled={status.state === "loading"}
+              required
+              className="w-full p-4 bg-black/30 border border-gray-700/50 rounded-xl focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 text-white placeholder-gray-500 transition-all duration-300"
+              placeholder="john@example.com"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Your Message *
+          </label>
+          <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            disabled={status.state === "loading"}
+            rows="6"
+            required
+            className="w-full h-35 p-4 bg-black/30 border border-gray-700/50 rounded-xl focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 text-white placeholder-gray-500 resize-none transition-all duration-300"
+            placeholder="Tell me about your project, timeline, and budget..."
+          />
+        </div>
+
+        <motion.button
+          type="submit"
+          disabled={status.state === "loading"}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-brand to-brand-dark text-white py-3 px-8 rounded-xl font-semibold text-lg hover:shadow-xl hover:shadow-brand/20 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300 group"
+        >
+          {status.state === "loading" ? (
+            <>
+              <LuLoader className="animate-spin text-xl" />
+              Sending...
+            </>
+          ) : (
+            <>
+              Send Message
+              <LuSend className="group-hover:translate-x-1 transition-transform" />
+            </>
+          )}
+        </motion.button>
+
+        <p className="text-center text-sm text-gray-500 pt-4 border-t border-gray-800/50">
+          * Required fields
+        </p>
+      </motion.form>
+
+      {/* Toast Notification */}
       <AnimatePresence>
         {status.state !== "idle" && (
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.4 }}
-            className={`absolute bottom-5 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg text-sm font-medium shadow-lg ${
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            transition={{ duration: 0.3, type: "spring" }}
+            className={`fixed bottom-8 right-8 z-50 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-sm border ${
               status.state === "success"
-                ? "bg-green-500/20 text-green-400 border border-green-500/40"
+                ? "bg-green-500/10 text-green-400 border-green-500/30"
                 : status.state === "error"
-                ? "bg-red-500/20 text-red-400 border border-red-500/40"
-                : ""
+                ? "bg-red-500/10 text-red-400 border-red-500/30"
+                : "bg-yellow-500/10 text-yellow-400 border-yellow-500/30"
             }`}
           >
-            <div className="flex items-center gap-2 shrink-0">
-              {status.state === "success" && <LuCircleCheck />}
-              {status.state === "error" && <LuCircleX />}
-              <span>{status.message}</span>
+            <div className="flex items-center gap-3">
+              <div
+                className={`p-2 rounded-lg ${
+                  status.state === "success"
+                    ? "bg-green-500/20"
+                    : status.state === "error"
+                    ? "bg-red-500/20"
+                    : "bg-yellow-500/20"
+                }`}
+              >
+                {status.state === "success" && <LuCircleCheck className="text-xl" />}
+                {status.state === "error" && <LuCircleX className="text-xl" />}
+                {status.state === "loading" && <LuLoader className="animate-spin text-xl" />}
+              </div>
+              <div>
+                <p className="font-medium">
+                  {status.state === "loading"
+                    ? "Sending your message..."
+                    : status.message}
+                </p>
+                {status.state !== "loading" && (
+                  <p className="text-sm opacity-75 mt-1">
+                    {status.state === "success"
+                      ? "You'll hear back within 24 hours"
+                      : "Please try again"}
+                  </p>
+                )}
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.form>
+    </div>
   );
 };
 

@@ -1,15 +1,23 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const ContactCard = ({ icon: Icon, href }) => (
+const ContactCard = ({ icon: Icon, label, value, href }) => (
   <motion.a
     href={href}
     target={href?.startsWith("http") ? "_blank" : undefined}
     rel="noopener noreferrer"
-    className="flex items-center gap-4 border border-gray-600/50 rounded-lg hover:border-brand hover:bg-brand/5 transition-all duration-300 group"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.98 }}
+    className="flex items-center gap-4 p-5 bg-white/5 backdrop-blur-sm border border-gray-700/50 rounded-2xl hover:border-brand hover:bg-gradient-to-br hover:from-brand/10 hover:to-transparent transition-all duration-300 group flex-1 min-w-0"
   >
-    <div className="group-hover:text-brand text-xl p-3 rounded-full">
-      <Icon />
+    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-brand/20 to-brand-dark/20 group-hover:from-brand/30 group-hover:to-brand-dark/30">
+      <Icon className="text-2xl text-brand group-hover:scale-110 transition-transform" />
+    </div>
+    <div className="flex-1 min-w-0">
+      <p className="text-sm text-gray-400 font-medium uppercase tracking-wide mb-1">
+        {label}
+      </p>
+      <p className="text-white font-medium truncate">{value}</p>
     </div>
   </motion.a>
 );

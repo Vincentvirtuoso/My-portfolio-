@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  LuMail,
-  LuPhone,
-  LuMapPin,
-  LuLinkedin,
-  LuGithub,
-  LuTwitter,
-} from "react-icons/lu";
 import ContactCard from "../../components/ui/ContactCard";
+import { LuMail, LuPhone, LuLinkedin, LuGithub, LuTwitter, LuMapPin } from "react-icons/lu";
 
 const ContactInfoGrid = () => {
   const info = [
@@ -25,8 +18,8 @@ const ContactInfoGrid = () => {
     },
     {
       icon: LuTwitter,
-      label: "twitter",
-      value: "Lagos, Nigeria",
+      label: "Twitter",
+      value: "@Splendid02",
       href: "https://x.com/Splendid02",
     },
     {
@@ -44,9 +37,9 @@ const ContactInfoGrid = () => {
   ];
 
   return (
-    <div className="flex gap-4 mb-6">
+    <div className="grid gap-4 mb-12">
       {info.map((item, i) => (
-        <ContactCard {...item} key={i} />
+        <ContactCard key={i} {...item} />
       ))}
     </div>
   );
