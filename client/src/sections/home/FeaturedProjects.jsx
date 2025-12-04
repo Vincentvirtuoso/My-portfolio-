@@ -19,19 +19,19 @@ const FeaturedProjects = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-gray-100 mb-8">
+      <h2 className="text-2xl font-semibold text-accent-foreground mb-8">
         Featured Projects
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-3 gap-4">
         {projects.map((p, i) => (
           <motion.div
             key={i}
             whileHover={{ scale: 1.03 }}
-            className="p-6 rounded-xl bg-white/5 border border-white/10 
+            className="p-6 rounded-xl bg-card border border-input 
             backdrop-blur-md hover:bg-white/10 transition"
           >
-            <h3 className="text-gray-100 font-semibold text-lg mb-3">
+            <h3 className="text-accent-foreground font-semibold text-lg mb-3">
               {p.title}
             </h3>
             <p className="text-gray-400 text-sm">{p.text}</p>

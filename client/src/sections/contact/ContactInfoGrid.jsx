@@ -37,7 +37,7 @@ const ContactInfoGrid = () => {
   ];
 
   return (
-    <div className="grid gap-4 mb-12">
+    <div className="flex flex-col gap-4 mb-12">
       {info.map((item, i) => (
         <ContactCard key={i} {...item} />
       ))}

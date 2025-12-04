@@ -13,9 +13,10 @@ const ContactForm = () => {
   });
 
   const handleChange = (e) => {
+    const { name, value} = e.target
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
   };
 
@@ -62,8 +63,33 @@ const ContactForm = () => {
     }
   };
 
+  const formElement = [
+    { label: 'Your Name', value: formData.user_name, name: 'user_name', type: 'text' },
+    { label: 'Your Email Address', value: formData.user_email, name: 'user_email', type: 'email', placeholder: 'john@example.com' },
+  ]
+
+  const FormInput = ({ label='', value, name, type="text", required, placeholder='John Doe'}) => {
+    return (
+      <div>
+        <label className="block text-sm font-medium text-muted-foreground mb-2">
+          {label} {required && <span className='text-red-400'>*</span>}
+        </label>
+        <input
+          type={type}
+          name={name}
+          value={value}
+          onChange={(e)=>handleChange(e)}
+          // disabled={status.state === "loading"}
+          required={required}
+          className="w-full px-4 py-3 text-sm bg-secondary border border-input rounded-xl focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 text-foreground placeholder-gray-500 transition-all duration-300"
+          placeholder={placeholder}
+        />
+      </div>
+    )
+  }
+
   return (
-    <div className="relative">
+    <div className="relative flex-1">
       <motion.form
         ref={formRef}
         onSubmit={sendEmail}
@@ -71,50 +97,22 @@ const ContactForm = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true, margin: "-100px" }}
-        className="bg-gradient-to-br from-white/5 to-white/2 backdrop-blur-sm border border-gray-700/30 p-8 rounded-2xl space-y-6 shadow-2xl shadow-black/20 flex-1"
+        className="bg-card backdrop-blur-sm border border-gray-700/30 p-6 mb-6 rounded-2xl space-y-6 shadow-2xl shadow-black/20"
       >
         <div className="text-center mb-6">
-          <h3 className="text-2xl font-bold text-white mb-2">Send a Message</h3>
+          <h3 className="text-2xl font-bold text-foreground mb-2">Send a Message</h3>
           <p className="text-gray-400">Fill out the form below and I'll get back to you ASAP</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Your Name *
-            </label>
-            <input
-              type="text"
-              name="user_name"
-              value={formData.user_name}
-              onChange={handleChange}
-              disabled={status.state === "loading"}
-              required
-              className="w-full p-4 bg-black/30 border border-gray-700/50 rounded-xl focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 text-white placeholder-gray-500 transition-all duration-300"
-              placeholder="John Doe"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Email Address *
-            </label>
-            <input
-              type="email"
-              name="user_email"
-              value={formData.user_email}
-              onChange={handleChange}
-              disabled={status.state === "loading"}
-              required
-              className="w-full p-4 bg-black/30 border border-gray-700/50 rounded-xl focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 text-white placeholder-gray-500 transition-all duration-300"
-              placeholder="john@example.com"
-            />
-          </div>
+          {formElement.map(form => 
+            <FormInput key={form.name} required {...form} />
+          )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Your Message *
+          <label className="block text-sm font-medium text-muted-foreground mb-2">
+            Your Message <span className='text-red-400'>*</span>
           </label>
           <textarea
             name="message"
@@ -123,7 +121,7 @@ const ContactForm = () => {
             disabled={status.state === "loading"}
             rows="6"
             required
-            className="w-full h-35 p-4 bg-black/30 border border-gray-700/50 rounded-xl focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 text-white placeholder-gray-500 resize-none transition-all duration-300"
+            className="w-full h-30 p-4 bg-secondary border border-input rounded-xl focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 text-foregroud placeholder-gray-500 resize-none transition-all duration-300"
             placeholder="Tell me about your project, timeline, and budget..."
           />
         </div>
@@ -131,9 +129,9 @@ const ContactForm = () => {
         <motion.button
           type="submit"
           disabled={status.state === "loading"}
-          whileHover={{ scale: 1.02 }}
+          whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-brand to-brand-dark text-white py-3 px-8 rounded-xl font-semibold text-lg hover:shadow-xl hover:shadow-brand/20 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300 group"
+          className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-brand to-brand-dark text-white py-3 px-8 rounded-xl font-semibold hover:shadow-xl hover:shadow-brand/20 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300 group"
         >
           {status.state === "loading" ? (
             <>
@@ -148,9 +146,6 @@ const ContactForm = () => {
           )}
         </motion.button>
 
-        <p className="text-center text-sm text-gray-500 pt-4 border-t border-gray-800/50">
-          * Required fields
-        </p>
       </motion.form>
 
       {/* Toast Notification */}

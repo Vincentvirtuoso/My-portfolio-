@@ -69,7 +69,7 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
           {/* Featured Badge */}
           {featured && (
             <div className="absolute top-4 left-4 z-10">
-              <div className="flex items-center gap-1 bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
+              <div className="flex items-center gap-1 bg-gradient-to-r from-yellow-500 to-orange-500 text-foregroud px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
                 <LuStar className="text-xs" />
                 Featured
               </div>
@@ -79,7 +79,7 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
           {/* Category Badge */}
           {category && (
             <div className="absolute top-4 right-4 z-10">
-              <div className="bg-brand text-white px-3 py-1 rounded-full text-xs font-semibold">
+              <div className="bg-brand text-foregroud px-3 py-1 rounded-full text-xs font-semibold">
                 {category}
               </div>
             </div>
@@ -107,7 +107,7 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white text-black p-3 rounded-full hover:bg-brand hover:text-white transition-colors duration-300"
+                className="bg-white text-black p-3 rounded-full hover:bg-brand hover:text-foregroud transition-colors duration-300"
               >
                 <LuExternalLink size={20} />
               </motion.a>)}
@@ -118,7 +118,7 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white text-black p-3 rounded-full hover:bg-gray-800 hover:text-white transition-colors duration-300"
+                className="bg-white text-black p-3 rounded-full hover:bg-gray-800 hover:text-foregroud transition-colors duration-300"
               >
                 <LuGithub size={20} />
               </motion.a>)}
@@ -128,7 +128,7 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
           {/* Content */}
           <div className="p-6 flex flex-col flex-1">
             <div className="mb-3">
-              <h3 className="text-xl font-bold text-white group-hover:text-brand transition-colors duration-300 mb-1">
+              <h3 className="text-xl font-bold text-foregroud group-hover:text-brand transition-colors duration-300 mb-1">
                 {title}
               </h3>
               {tagline && (
@@ -162,7 +162,7 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
                   e.stopPropagation();
                   setOpen(true);
                 }}
-                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-gray-400 hover:text-foregroud transition-colors"
               >
                 <LuEye size={16} />
                 View Details
@@ -203,7 +203,7 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-3">
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <h3 className="text-xl font-bold text-white group-hover:text-brand transition-colors">
+                  <h3 className="text-xl font-bold text-foregroud group-hover:text-brand transition-colors">
                     {title}
                   </h3>
                   {featured && (
@@ -234,7 +234,7 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
                   e.stopPropagation();
                   setOpen(true);
                 }}
-                className="ml-auto flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                className="ml-auto flex items-center gap-2 text-sm text-gray-400 hover:text-foregroud transition-colors"
               >
                 <LuInfo size={16} />
                 More Info

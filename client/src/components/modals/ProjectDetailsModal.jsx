@@ -54,10 +54,10 @@ const ProjectDetailsModal = ({ project, onClose }) => {
           className="bg-neutral-900 dark:bg-neutral-800 max-w-xl w-full rounded-2xl max-h-[90vh] overflow-hidden pb-2 shadow-lg z-1">
           {/* Header */}
           <div className="flex justify-between items-center border-b bg-neutral-800 border-gray-700 p-5 sticky top-0">
-            <h2 className="text-xl font-bold text-white">{title}</h2>
+            <h2 className="text-xl font-bold text-foregroud">{title}</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-gray-400 hover:text-foregroud transition-colors"
             >
               <LuX size={24} />
             </button>
@@ -123,7 +123,7 @@ const ProjectDetailsModal = ({ project, onClose }) => {
 
             {role && (
               <p className="text-gray-400 text-sm">
-                <strong className="text-white">Role:</strong> {role}
+                <strong className="text-foregroud">Role:</strong> {role}
               </p>
             )}
 
@@ -168,7 +168,7 @@ const ProjectDetailsModal = ({ project, onClose }) => {
                 href={live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-brand text-white px-4 py-2 rounded-lg hover:bg-brand/70 transition justify-center flex-1"
+                className="flex items-center gap-2 bg-brand text-foregroud px-4 py-2 rounded-lg hover:bg-brand/70 transition justify-center flex-1"
               >
                 <LuExternalLink /> Live Demo
               </a>

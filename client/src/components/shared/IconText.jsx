@@ -49,7 +49,7 @@ const IconText = ({
   const variantClasses = {
     default: "",
     subtle: "opacity-80 hover:opacity-100",
-    solid: "bg-brand text-white hover:bg-brand-dark",
+    solid: "bg-brand text-foregroud hover:bg-brand-dark",
     outline: "border border-brand/50 hover:border-brand text-brand",
   };
 

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import useToggleState from "../../hooks/useToggleState";
 
 const links = [
+  { label: "Home", to: "/" },
   { label: "About Me", to: "/about" },
   { label: "Projects", to: "/projects" },
   { label: "Contact", to: "/contact" },
@@ -26,32 +27,20 @@ const NavbarDropdown = ({ onClose, theme }) => (
       initial={{ y: -10, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: -5, opacity: 0 }}
-      className={`fixed right-5 top-16 w-44 rounded-xl backdrop-blur-xl p-2 shadow-lg border z-10 sm:hidden
+      className={`fixed right-4 top-18 w-44 rounded-xl backdrop-blur-xl p-2 shadow-lg border z-10 sm:hidden
         ${theme === 'dark' 
           ? 'bg-black/30 border-white/10' 
           : 'bg-white/20 border-gray-200/20'
         }`}
     >
-      <NavLink
-        to="/"
-        className={`block px-4 py-2 text-sm rounded-lg transition
-          ${theme === 'dark' 
-            ? 'text-gray-200 hover:bg-white/10' 
-            : 'text-gray-800 hover:bg-black/10'
-          }`}
-        onClick={onClose}
-      >
-        Home
-      </NavLink>
-
       {links.map(({ label, to }) => (
         <NavLink
           key={label}
           to={to}
           className={`block px-4 py-2 text-sm rounded-lg transition
             ${theme === 'dark' 
-              ? 'text-gray-200 hover:bg-white/10' 
-              : 'text-gray-800 hover:bg-black/10'
+              ? 'text-gray-200 hover:bg-white/10 hover:text-brand' 
+              : 'text-gray-900 hover:bg-black/10 hover:text-gray-100'
             }`}
           onClick={onClose}
         >
@@ -83,11 +72,7 @@ const ThemeToggler = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="
-        relative p-2 rounded-lg
-        bg-white/10 hover:bg-white/20
-        transition-all duration-300
-      "
+      className="relative p-2 rounded-lg hover:bg-card transition-all duration-300"
       aria-label="Toggle theme"
     >
       <div className="relative w-5 h-5 overflow-hidden">
@@ -99,7 +84,7 @@ const ThemeToggler = () => {
           }}
           className="absolute inset-0"
         >
-          <LuSun className="w-full h-full text-yellow-500" />
+          <LuSun className="w-full h-full text-amber-500" />
         </motion.div>
 
         <motion.div
@@ -110,7 +95,7 @@ const ThemeToggler = () => {
           }}
           className="absolute inset-0"
         >
-          <LuMoon className="w-full h-full text-blue-300" />
+          <LuMoon className="w-full h-full text-brand" />
         </motion.div>
       </div>
     </button>
@@ -175,7 +160,7 @@ const Navbar = () => {
               to={to}
               className={`relative transition text-sm
                 ${theme === 'dark' 
-                  ? 'text-gray-300 hover:text-white' 
+                  ? 'text-gray-300 hover:text-foregroud' 
                   : 'text-gray-600 hover:text-gray-900'
                 }`}
             >

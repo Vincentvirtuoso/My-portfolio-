@@ -28,7 +28,7 @@ const Skills = ({ technicalSkills }) => {
           <motion.div             
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md 
+          className="p-6 rounded-xl bg-card border border-border backdrop-blur-md 
             hover:bg-white/10 transition rounded-2xl">
             <FaServer className="text-brand text-3xl mb-4" />
             <h4 className="text-xl font-semibold mb-2">Backend Development</h4>
@@ -43,7 +43,7 @@ const Skills = ({ technicalSkills }) => {
           initial={{ opacity: 0, y: 20 }}
           transition={{ delay: 0.4 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md 
+          className="p-6 rounded-xl bg-card border border-border backdrop-blur-md 
             hover:bg-white/10 transition rounded-2xl">
             <FaPalette className="text-brand text-3xl mb-4" />
             <h4 className="text-xl font-semibold mb-2">Frontend Development</h4>

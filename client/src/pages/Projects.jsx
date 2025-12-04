@@ -82,12 +82,12 @@ const Projects = () => {
                 placeholder="Search projects by name, tech..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-white/5 border border-gray-700/50 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-300"
+                className="w-full pl-12 pr-4 py-3 bg-white/5 border border-gray-700/50 rounded-2xl text-foregroud placeholder-gray-500 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-300"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-foregroud"
                 >
                   <LuX />
                 </button>
@@ -100,7 +100,7 @@ const Projects = () => {
             className={`p-3 rounded-xl transition-all duration-300 ${
               viewMode === "grid"
                 ? "bg-brand/20 text-brand border border-brand/30"
-                : "bg-white/5 text-gray-400 hover:text-white"
+                : "bg-white/5 text-gray-400 hover:text-foregroud"
             }`}
           >
             <FiGrid className="text-xl" />
@@ -110,7 +110,7 @@ const Projects = () => {
             className={`p-3 rounded-xl transition-all duration-300 ${
               viewMode === "list"
                 ? "bg-brand/20 text-brand border border-brand/30"
-                : "bg-white/5 text-gray-400 hover:text-white"
+                : "bg-white/5 text-gray-400 hover:text-foregroud"
             }`}
           >
             <LuList className="text-xl" />
@@ -136,7 +136,7 @@ const Projects = () => {
               className="text-center py-16"
             >
               <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-2xl font-bold text-white mb-2">No Projects Found</h3>
+              <h3 className="text-2xl font-bold text-foregroud mb-2">No Projects Found</h3>
               <p className="text-gray-400 max-w-md mx-auto">
                 Try adjusting your search or filter to find what you're looking for.
               </p>
@@ -176,7 +176,7 @@ const Projects = () => {
         variants={itemVariants}
         className="text-center">
         <div className="bg-gradient-to-r from-brand/10 to-brand-dark/10 border border-brand/30 rounded-2xl p-8 max-w-2xl mx-auto">
-          <h3 className="text-2xl font-bold text-white mb-4">
+          <h3 className="text-2xl font-bold text-foregroud mb-4">
             Interested in Collaborating?
           </h3>
           <p className="text-gray-300 mb-6">
@@ -184,7 +184,7 @@ const Projects = () => {
           </p>
           <a
             href="/contact"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-brand to-brand-dark text-white px-8 py-4 rounded-full font-semibold hover:shadow-2xl hover:shadow-brand/25 transition-all duration-300"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-brand to-brand-dark text-foregroud px-8 py-4 rounded-full font-semibold hover:shadow-2xl hover:shadow-brand/25 transition-all duration-300"
           >
             Start a Conversation
           </a>

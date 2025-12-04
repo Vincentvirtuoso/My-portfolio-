@@ -21,9 +21,9 @@ const Journey = ({ timelineData }) => {
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-brand/10 to-brand-dark/10 p-8 rounded-2xl border border-brand/30">
+      <div className="bg-blue-300/20 p-8 rounded-2xl border border-brand/30">
         <h4 className="text-xl font-semibold mb-4">Current Focus</h4>
-        <p className="text-gray-300 leading-relaxed">
+        <p className="text-gray-400 leading-relaxed">
           Currently expanding expertise in cloud-native development, microservices architecture, 
           and advanced TypeScript patterns. Working on performance optimization techniques 
           and accessibility best practices.

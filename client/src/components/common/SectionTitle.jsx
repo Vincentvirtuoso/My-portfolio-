@@ -1,6 +1,6 @@
 import React from "react";
 
-const SectionTitle = ({ title, size = "4xl", color = "text-gray-100" }) => {
+const SectionTitle = ({ title, size = "4xl", color = "text-foreground" }) => {
   return (
     <h2
       className={`font-bold text-${size} ${

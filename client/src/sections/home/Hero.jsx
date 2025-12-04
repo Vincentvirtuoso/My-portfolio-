@@ -47,11 +47,11 @@ const Hero = () => {
         </div>
 
         <div className="mt-7 flex gap-4">
-          <button className="bg-brand text-gray-100 px-6 py-2.5 rounded-xl hover:bg-brand-dark transition">
+          <button className="bg-brand text-gray-100 px-6 py-2 rounded-xl hover:bg-brand-dark transition">
             Hire Me
           </button>
           <button 
-          className="border border-gray-600 px-6 py-2.5 rounded-xl hover:bg-gray-700 transition"
+          className="border border-input px-6 py-2 rounded-xl hover:bg-gray-700 hover:text-white transition"
           onClick={()=>naviagte('/projects')}>
             View Projects
           </button>

@@ -34,7 +34,7 @@ const Contact = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <motion.div variants={itemVariants} className="mb-6">
             <SectionTitle
@@ -53,7 +53,7 @@ const Contact = () => {
 
           <motion.p 
             variants={itemVariants}
-            className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8"
+            className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed mb-8"
           >
             Got a project idea, collaboration opportunity, or just want to say hello? 
             I'd love to hear from you. I'm currently available for freelance projects 
@@ -65,13 +65,13 @@ const Contact = () => {
             <a
               href="/resume.pdf"
               download
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-brand/10 to-brand-dark/10 hover:from-brand/20 hover:to-brand-dark/20 border border-brand/30 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-brand/20 transition-all duration-300 group"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-brand-light/40 to-brand-dark/40 hover:from-brand/20 hover:to-brand-dark/20 border border-brand/30 text-foreground px-6 py-2 rounded-xl font-semibold hover:shadow-lg hover:shadow-brand/20 transition-all duration-300 group"
             >
               <LuDownload className="text-xl" />
               Download Resume
               <LuArrowRight className="group-hover:translate-x-1 transition-transform" />
             </a>
-            <p className="text-gray-500 text-sm mt-2">PDF • 2.4 MB</p>
+            <p className="text-gray-400 text-sm mt-2">PDF • 2.4 MB</p>
           </motion.div>
         </motion.div>
 

@@ -23,21 +23,21 @@ const services = [
 const Services = () => {
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-gray-100 mb-8">
+      <h2 className="text-2xl font-semibold text-accent-foreground mb-8">
         What I Do
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-3 gap-4">
         {services.map(({ icon: Icon, title, text }, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md 
+            className="p-6 rounded-xl bg-card border border-input backdrop-blur-md 
             hover:bg-white/10 transition"
           >
             <Icon className="text-brand text-3xl mb-4" />
-            <h3 className="text-gray-100 font-semibold text-lg mb-2">{title}</h3>
+            <h3 className="text-accent-foreground font-semibold text-lg mb-2">{title}</h3>
             <p className="text-gray-400 text-sm">{text}</p>
           </motion.div>
         ))}

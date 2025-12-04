@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom'
 import { motion } from "framer-motion";
 import SectionTitle from "../components/common/SectionTitle";
 import Overview from "../sections/about/Overview";
@@ -49,10 +50,10 @@ import StatCard from "../components/shared/StatCard";
 const TabButton = ({ active, onClick, children }) => (
   <button
     onClick={onClick}
-    className={`px-4 py-2 rounded-full font-semibold transition-all duration-300 ${
+    className={`px-5 py-1.5 rounded-full font-semibold transition-all duration-300 ${
       active
         ? "bg-gradient-to-r from-brand to-brand-dark text-white shadow-lg shadow-brand/25"
-        : "bg-white/5 text-gray-400 hover:text-white hover:bg-white/10"
+        : "bg-white/5 text-gray-400 hover:text-muted-foreground hover:bg-white/10"
     }`}
   >
     {children}
@@ -160,8 +161,10 @@ const About = () => {
     }
   ];
 
+  const LinkBtn = motion(Link)
+
   return (
-    <section className="min-h-screen text-white">
+    <section className="min-h-screen">
       <div className="max-w-7xl mx-auto pt-10">
         {/* Hero Section */}
         <motion.div
@@ -171,7 +174,7 @@ const About = () => {
           className="text-center mb-16"
         >
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light">Me</span>
+            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-dark">Me</span>
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
             Full-Stack Developer passionate about creating exceptional digital experiences
@@ -179,7 +182,7 @@ const About = () => {
         </motion.div>
 
         {/* Tabs Navigation */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12 sticky top-20 z-1">
+        <div className="flex flex-wrap justify-center gap-4 mb-10 sticky top-20 z-1">
           <TabButton active={activeTab === "overview"} onClick={() => setActiveTab("overview")}>
             Overview
           </TabButton>
@@ -203,23 +206,23 @@ const About = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-gradient-to-br from-white/5 to-transparent rounded-3xl p-8 border border-gray-800/50 backdrop-blur-sm"
+              className="bg-gradient-to-br from-card to-transparent rounded-3xl p-8 border border-border backdrop-blur-sm"
             >
               {/* Profile Image */}
               <div className="relative mb-8">
-                <div className="absolute inset-0 bg-gradient-to-r from-brand to-brand-dark rounded-2xl blur-xl opacity-20" />
+                <div className="absolute inset-0 bg-gradient-to-r from-brand to-brand-dark rounded-3xl blur-xl opacity-20" />
                 <img
                   src={profile}
                   alt="Felix Vincent"
-                  className="relative w-48 h-48 mx-auto rounded-2xl object-cover border-4 border-white/10 shadow-2xl"
+                  className="relative w-48 h-48 mx-auto rounded-2xl object-cover border-4 border-brand shadow-2xl"
                 />
               </div>
               
               {/* Profile Info */}
               <div className="text-center">
                 <h2 className="text-3xl font-bold mb-2">Felix Vincent</h2>
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-brand/20 to-brand-dark/20 px-4 py-2 rounded-full mb-4">
-                  <FaCode className="text-brand" />
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-brand/20 to-brand-dark/20 px-4 py-2 rounded-full mb-4 border border-brand text-sm">
+                  <FaCode className="text-brand text-xl" />
                   <span className="font-semibold">Full-Stack Developer</span>
                 </div>
                 
@@ -245,7 +248,7 @@ const About = () => {
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-4">
               {professionalStats.map((stat, index) => (
-                <StatCard key={index} {...stat} />
+                <StatCard key={index} size='md' {...stat} />
               ))}
             </div>
           </div>
@@ -281,16 +284,16 @@ const About = () => {
             </motion.div>
 
             {/* Call to Action */}
-            <div className="text-center pt-8 border-t border-gray-800/50">
-              <motion.a
+            <div className="text-center pt-8 border-t border-border">
+              <LinkBtn
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="/contact"
-                className="inline-flex items-center gap-3 bg-gradient-to-r from-brand to-brand-dark text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-2xl hover:shadow-brand/25 transition-all duration-300"
+                to="/contact"
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-brand to-brand-dark text-white px-8 py-3 rounded-full font-semibold text-md hover:shadow-2xl hover:shadow-brand/25 transition-all duration-300"
               >
-                Let's Build Something Amazing
+                Build Something Amazing
                 <FaRocket className="ml-2" />
-              </motion.a>
+              </LinkBtn>
             </div>
           </div>
         </div>
