@@ -37,24 +37,23 @@ const ProjectDetailsModal = ({ project, onClose }) => {
 
   return (
     <AnimatePresence>
-      <motion.div
-        className="flex items-center justify-center p-6 relative h-full w-full"
-      >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="absolute inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center cursor-pointer"
-        onClick={()=> onClose()}
-      />
+      <motion.div className="flex items-center justify-center p-6 relative h-full w-full">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center cursor-pointer"
+          onClick={() => onClose()}
+        />
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-neutral-900 dark:bg-neutral-800 max-w-xl w-full rounded-2xl max-h-[90vh] overflow-hidden pb-2 shadow-lg z-1">
+          className="bg-neutral-900 dark:bg-neutral-800 max-w-xl w-full rounded-2xl max-h-[90vh] overflow-hidden pb-2 shadow-lg z-1"
+        >
           {/* Header */}
           <div className="flex justify-between items-center border-b bg-neutral-800 border-gray-700 p-5 sticky top-0">
-            <h2 className="text-xl font-bold text-foregroud">{title}</h2>
+            <h2 className="text-xl font-bold text-white">{title}</h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-foregroud transition-colors"
@@ -115,7 +114,7 @@ const ProjectDetailsModal = ({ project, onClose }) => {
                   <IconText
                     label={t.name}
                     icon={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${t.icon}/${t.icon}-original.svg`}
-                    imageClass='w-5 h-5'
+                    imageClass="w-5 h-5"
                   />
                 </span>
               ))}

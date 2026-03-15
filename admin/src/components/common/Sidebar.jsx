@@ -19,16 +19,18 @@ import {
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
+import { useAbout } from "../../hooks/useAbout";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const { theme, toggleTheme } = useTheme();
   const { logout, pageTitle } = useAuth();
   const navigate = useNavigate();
+  const { about } = useAbout();
 
   const navItems = [
     { path: "/", icon: LayoutDashboard, label: "Dashboard" },
     { path: "/projects", icon: FolderKanban, label: "Projects" },
-    { path: "/media", icon: Image, label: "Media" },
+    // { path: "/media", icon: Image, label: "Media" },
     // { path: "/messages", icon: MessageSquare, label: "Messages" },
     { path: "/skills", icon: Code2, label: "Skills" },
     // { path: "/testimonials", icon: Star, label: "Testimonials" },
@@ -127,9 +129,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             <div className="flex justify-between">
               <div className="flex items-center space-x-3">
                 <img
-                  src="/images/profile.png"
+                  src={about?.avatar || "/images/profile.png"}
                   alt="Profile"
-                  className="w-10 h-10 rounded-full"
+                  className="w-10 h-10 rounded-full object-cover"
                 />
                 <div>
                   <p className="text-sm font-medium text-gray-800 dark:text-white">

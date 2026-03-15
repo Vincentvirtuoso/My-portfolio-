@@ -5,16 +5,17 @@ export const useImageUpload = () => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
 
-  const uploadImage = async (file) => {
+  const uploadImage = async (file, preset = 0) => {
     setUploading(true);
     setError(null);
+    const presets = [
+      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
+      import.meta.env.VITE_CLOUDINARY_PROFILE_UPLOAD_PRESET,
+    ];
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append(
-      "upload_preset",
-      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
-    );
+    formData.append("upload_preset", presets[preset]);
     formData.append("cloud_name", import.meta.env.VITE_CLOUDINARY_CLOUD_NAME);
 
     try {

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { LuCodeXml, LuMenu, LuExternalLink, LuSun, LuMoon } from "react-icons/lu";
+import {
+  LuCodeXml,
+  LuMenu,
+  LuExternalLink,
+  LuSun,
+  LuMoon,
+} from "react-icons/lu";
 import { motion, AnimatePresence } from "framer-motion";
 import useToggleState from "../../hooks/useToggleState";
 
@@ -28,9 +34,10 @@ const NavbarDropdown = ({ onClose, theme }) => (
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: -5, opacity: 0 }}
       className={`fixed right-4 top-18 w-44 rounded-xl backdrop-blur-xl p-2 shadow-lg border z-10 sm:hidden
-        ${theme === 'dark' 
-          ? 'bg-black/30 border-white/10' 
-          : 'bg-white/20 border-gray-200/20'
+        ${
+          theme === "dark"
+            ? "bg-black/30 border-white/10"
+            : "bg-white/20 border-gray-200/20"
         }`}
     >
       {links.map(({ label, to }) => (
@@ -38,9 +45,10 @@ const NavbarDropdown = ({ onClose, theme }) => (
           key={label}
           to={to}
           className={`block px-4 py-2 text-sm rounded-lg transition
-            ${theme === 'dark' 
-              ? 'text-gray-200 hover:bg-white/10 hover:text-brand' 
-              : 'text-gray-900 hover:bg-black/10 hover:text-gray-100'
+            ${
+              theme === "dark"
+                ? "text-gray-200 hover:bg-white/10 hover:text-brand"
+                : "text-gray-900 hover:bg-black/10 hover:text-gray-100"
             }`}
           onClick={onClose}
         >
@@ -127,7 +135,6 @@ const Navbar = () => {
     if (showMenu) toggle(false);
   }, [pathname]);
 
-
   return (
     <>
       <motion.nav
@@ -138,16 +145,21 @@ const Navbar = () => {
           sticky top-3 z-30 mx-2 px-4 py-2 rounded-2xl
           backdrop-blur-xl border shadow-[0_8px_32px_rgba(0,0,0,0.2)]
           flex items-center justify-between
-          ${theme === 'dark' 
-            ? 'bg-black/20 border-white/10' 
-            : 'bg-white/10 border-gray-200/20'
+          ${
+            theme === "dark"
+              ? "bg-black/20 border-white/10"
+              : "bg-white/10 border-gray-200/20"
           }
         `}
       >
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-2">
-          <LuCodeXml className={`text-2xl ${theme === 'dark' ? 'text-brand' : 'text-brand-dark'}`} />
-          <span className={`font-semibold hidden sm:block ${theme === 'dark' ? 'text-gray-200' : 'text-gray-800'}`}>
+          <LuCodeXml
+            className={`text-2xl ${theme === "dark" ? "text-brand" : "text-brand-dark"}`}
+          />
+          <span
+            className={`font-semibold hidden sm:block ${theme === "dark" ? "text-gray-200" : "text-gray-800"}`}
+          >
             Splendid.dev
           </span>
         </NavLink>
@@ -159,9 +171,10 @@ const Navbar = () => {
               key={label}
               to={to}
               className={`relative transition text-sm
-                ${theme === 'dark' 
-                  ? 'text-gray-300 hover:text-foregroud' 
-                  : 'text-gray-600 hover:text-gray-900'
+                ${
+                  theme === "dark"
+                    ? "text-gray-300 hover:text-foregroud"
+                    : "text-gray-600 hover:text-gray-900"
                 }`}
             >
               {({ isActive }) => (
@@ -183,35 +196,34 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           <ThemeToggler />
 
-          <button
+          <NavLink
+            to="/book-call"
             className={`
               bg-gradient-to-r from-brand to-brand-dark 
               py-1.5 px-4 rounded-lg text-sm 
               flex items-center gap-2 shadow-lg
               hover:scale-105 transition
-              ${theme === 'dark' 
-                ? 'text-gray-100' 
-                : 'text-white'
-              }
+              ${theme === "dark" ? "text-gray-100" : "text-white"}
             `}
           >
             Book a call <LuExternalLink className="text-xs" />
-          </button>
+          </NavLink>
 
           {/* Mobile Menu Toggle */}
           <div className="sm:hidden">
             <LuMenu
-              className={`text-xl cursor-pointer ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}
+              className={`text-xl cursor-pointer ${theme === "dark" ? "text-gray-200" : "text-gray-700"}`}
               onClick={() => toggle()}
             />
           </div>
         </div>
-
       </motion.nav>
 
       {/* Mobile Dropdown */}
       <AnimatePresence>
-        {showMenu && <NavbarDropdown onClose={() => toggle(false)} theme={theme} />}
+        {showMenu && (
+          <NavbarDropdown onClose={() => toggle(false)} theme={theme} />
+        )}
       </AnimatePresence>
     </>
   );

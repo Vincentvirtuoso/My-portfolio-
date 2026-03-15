@@ -8,6 +8,10 @@ const AboutSchema = new mongoose.Schema({
   location: { type: String, default: "Lagos, Nigeria" },
   avatar: { type: String },
   availability: { type: String, default: "Available for remote work" },
+  availabilitySlots: {
+    type: [String],
+    default: ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
+  },
 
   stats: {
     yearsExperience: { type: Number, default: 3 },
@@ -32,6 +36,12 @@ const AboutSchema = new mongoose.Schema({
       category: { type: String, default: "General" },
     },
   ],
+
+  socialLinks: {
+    github: { type: String },
+    twitter: { type: String },
+    linkedin: { type: String },
+  },
 
   specializations: [
     {

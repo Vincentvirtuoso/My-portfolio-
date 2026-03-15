@@ -5,6 +5,7 @@ import Projects from "../pages/Projects";
 import Contact from "../pages/Contact";
 import NotFound from "../pages/NotFound";
 import App from "../App";
+import BookCall from "../pages/BookCall";
 
 const Router = createBrowserRouter([
   {
@@ -15,10 +16,10 @@ const Router = createBrowserRouter([
       { path: "about", element: <About /> },
       { path: "projects", element: <Projects /> },
       { path: "contact", element: <Contact /> },
+      { path: "book-call", element: <BookCall /> },
     ],
   },
   { path: "*", element: <NotFound /> },
 ]);
 
 export default Router;
-

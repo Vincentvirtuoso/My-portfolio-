@@ -403,6 +403,7 @@ const ProjectForm = ({
                       <option value="In Progress">In Progress</option>
                       <option value="Planning">Planning</option>
                       <option value="On Hold">On Hold</option>
+                      <option value="Draft">Draft</option>
                     </select>
                   </div>
 
