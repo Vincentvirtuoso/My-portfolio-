@@ -1,12 +1,12 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import profile from "../../assets/images/profiles/test-profile.webp";
+import profile from "/images/profile.png";
 import { LuMapPin, LuMail, LuPhone } from "react-icons/lu";
 import { FaCircle } from "react-icons/fa";
 
 const Hero = () => {
-  const naviagte = useNavigate()
+  const naviagte = useNavigate();
   return (
     <header className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
       {/* LEFT */}
@@ -17,10 +17,7 @@ const Hero = () => {
         className="flex flex-col flex-1"
       >
         <h1 className="text-4xl lg:text-5xl font-bold leading-snug">
-          Hi, I'm{" "}
-          <span className="text-brand">
-            Felix Vincent
-          </span>
+          Hi, I'm <span className="text-brand">Felix Vincent</span>
           <br />
           Full-Stack Developer & Web3 Engineer
         </h1>
@@ -50,9 +47,10 @@ const Hero = () => {
           <button className="bg-brand text-gray-100 px-6 py-2 rounded-xl hover:bg-brand-dark transition">
             Hire Me
           </button>
-          <button 
-          className="border border-input px-6 py-2 rounded-xl hover:bg-gray-700 hover:text-white transition"
-          onClick={()=>naviagte('/projects')}>
+          <button
+            className="border border-input px-6 py-2 rounded-xl hover:bg-gray-700 hover:text-white transition"
+            onClick={() => naviagte("/projects")}
+          >
             View Projects
           </button>
         </div>

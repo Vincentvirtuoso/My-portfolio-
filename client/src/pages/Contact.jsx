@@ -4,6 +4,9 @@ import SectionTitle from "../components/common/SectionTitle";
 import ContactInfoGrid from "../sections/contact/ContactInfoGrid";
 import ContactForm from "../sections/contact/ContactForm";
 import { LuDownload, LuArrowRight } from "react-icons/lu";
+import { useEffect } from "react";
+import { useState } from "react";
+import { formatFileSize } from "../utils/helpers";
 
 const Contact = () => {
   const containerVariants = {
@@ -12,9 +15,9 @@ const Contact = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
+        delayChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
@@ -22,9 +25,27 @@ const Contact = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5 }
-    }
+      transition: { duration: 0.5 },
+    },
   };
+  const [fileType, setFileType] = useState("");
+  const [fileSize, setFileSize] = useState("");
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch("/resume.pdf")
+      .then((res) => {
+        console.log("file type");
+        console.log("file size");
+        setFileSize(res.headers.get("content-length"));
+        setFileType(res.headers.get("content-type"));
+      })
+      .catch((err) => {
+        console.log(err);
+
+        setError(err);
+      });
+  }, []);
 
   return (
     <section className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
@@ -51,13 +72,13 @@ const Contact = () => {
             />
           </motion.div>
 
-          <motion.p 
+          <motion.p
             variants={itemVariants}
             className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed mb-8"
           >
-            Got a project idea, collaboration opportunity, or just want to say hello? 
-            I'd love to hear from you. I'm currently available for freelance projects 
-            and full-time opportunities.
+            Got a project idea, collaboration opportunity, or just want to say
+            hello? I'd love to hear from you. I'm currently available for
+            freelance projects and full-time opportunities.
           </motion.p>
 
           {/* Download Resume Button */}
@@ -71,12 +92,19 @@ const Contact = () => {
               Download Resume
               <LuArrowRight className="group-hover:translate-x-1 transition-transform" />
             </a>
-            <p className="text-gray-400 text-sm mt-2">PDF • 2.4 MB</p>
+            {error ? (
+              "--"
+            ) : (
+              <p className="text-gray-400 text-sm mt-2">
+                {fileType.split("/")[1]?.toUpperCase() || "PDF"} •{" "}
+                {formatFileSize(fileSize) || "2.4 MB"}
+              </p>
+            )}
           </motion.div>
         </motion.div>
 
         {/* Contact Info Grid */}
-        <div className='flex flex-col md:flex-row gap-6'>
+        <div className="flex flex-col md:flex-row gap-6">
           <motion.div
             variants={itemVariants}
             initial={{ opacity: 0, y: 30 }}
@@ -97,7 +125,7 @@ const Contact = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className='flex-1'
+            className="flex-1"
             viewport={{ once: true }}
           >
             <ContactForm />
@@ -117,8 +145,8 @@ const Contact = () => {
             Usually within 24 hours
           </p>
           <p className="text-sm mt-1">
-            <span className="text-brand font-semibold">Availability:</span>{" "}
-            Open to full-time positions and freelance projects
+            <span className="text-brand font-semibold">Availability:</span> Open
+            to full-time positions and freelance projects
           </p>
         </motion.div>
       </div>

@@ -7,20 +7,20 @@ const ContactInfoGrid = () => {
     {
       icon: LuMail,
       label: "Email",
-      value: "felixvincent.dev@gmail.com",
-      href: "mailto:felixvincent.dev@gmail.com",
+      value: "vincentvirtuoso66@gmail.com",
+      href: "mailto:vincentvirtuoso66@gmail.com",
     },
     {
       icon: LuPhone,
       label: "Phone",
-      value: "+234 901 234 5678",
-      href: "tel:+2349012345678",
+      value: "+234 708 348 4603",
+      href: "tel:+2347083484603",
     },
     {
       icon: LuTwitter,
       label: "Twitter",
-      value: "@Splendid02",
-      href: "https://x.com/Splendid02",
+      value: "@Vincent022__dev",
+      href: "https://x.com/Vincent022__dev",
     },
     {
       icon: LuLinkedin,
@@ -31,8 +31,8 @@ const ContactInfoGrid = () => {
     {
       icon: LuGithub,
       label: "GitHub",
-      value: "github.com/felixvincent",
-      href: "https://github.com/felixvincent",
+      value: "github.com/Vincentvirtuoso",
+      href: "https://github.com/Vincentvirtuoso",
     },
   ];
 

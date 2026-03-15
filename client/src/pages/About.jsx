@@ -1,32 +1,31 @@
-import React, { useState } from "react";
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import SectionTitle from "../components/common/SectionTitle";
 import Overview from "../sections/about/Overview";
 import Journey from "../sections/about/Journey";
 import Skills from "../sections/about/Skills";
 import Tools from "../sections/about/Tools";
-import profile from "../assets/images/profiles/test-profile.webp";
-import { 
-  FaReact, 
-  FaNodeJs, 
-  FaJs, 
-  FaCss3Alt, 
-  FaDatabase,
+import StatCard from "../components/shared/StatCard";
+import ErrorAlert from "../components/shared/ErrorAlert";
+import { useAbout } from "../hooks/useAbout";
+import profile from "/images/profile.png";
+import {
   FaCode,
-  FaServer,
   FaLayerGroup,
-  FaRocket,
   FaUserTie,
-  FaGraduationCap,
-  FaAward,
-  FaTools,
-  FaChartLine,
-  FaPalette,
-  FaMobileAlt,
+  FaRocket,
   FaMapPin,
+  FaMobileAlt,
+  FaReact,
+  FaNodeJs,
+  FaJs,
+  FaCss3Alt,
+  FaDatabase,
+  FaServer,
+  FaPalette,
+  FaChartLine,
+  FaHandshake,
   FaLightbulb,
-  FaHandshake
 } from "react-icons/fa";
 import {
   SiNextdotjs,
@@ -42,9 +41,9 @@ import {
   SiJest,
   SiPostman,
   SiVercel,
-  SiNetlify
+  SiNetlify,
 } from "react-icons/si";
-import StatCard from "../components/shared/StatCard";
+import Spinner from "../components/loaders/Spinner";
 
 // Tab Component
 const TabButton = ({ active, onClick, children }) => (
@@ -62,110 +61,82 @@ const TabButton = ({ active, onClick, children }) => (
 
 const About = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const { about, loading, error, fetchAbout } = useAbout();
 
-  // Professional Stats
+  if (loading || !about) {
+    return (
+      <section className="min-h-screen flex items-center justify-center">
+        <Spinner size="lg" />
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="min-h-screen flex items-center justify-center">
+        <ErrorAlert message={error} onRetry={fetchAbout} />
+      </section>
+    );
+  }
+
+  // Map backend stats to frontend format
   const professionalStats = [
     {
       icon: FaCode,
-      value: "3+",
+      value: `${about.stats?.yearsExperience || 3}+`,
       label: "Years Experience",
-      description: "Building web applications"
+      description: "Building web applications",
     },
     {
       icon: FaLayerGroup,
-      value: "10+",
+      value: `${about.stats?.projectsCompleted || 10}+`,
       label: "Projects Completed",
-      description: "Across various domains"
+      description: "Across various domains",
     },
     {
       icon: FaUserTie,
-      value: "4+",
+      value: `${about.stats?.teamProjects || 4}+`,
       label: "Team Projects",
-      description: "Successful collaborations"
+      description: "Successful collaborations",
     },
     {
       icon: FaRocket,
-      value: "100%",
+      value: `${about.stats?.commitment || 100}%`,
       label: "Commitment",
-      description: "To code quality & deadlines"
-    }
+      description: "To code quality & deadlines",
+    },
   ];
 
-  // Technical Skills
-  const technicalSkills = [
-    { skill: "React.js", level: 90, icon: FaReact },
-    { skill: "JavaScript/ES6+", level: 95, icon: FaJs },
-    { skill: "Node.js", level: 90, icon: FaNodeJs },
-    { skill: "Next.js", level: 75, icon: SiNextdotjs },
-    { skill: "TypeScript", level: 50, icon: SiTypescript },
-    { skill: "MongoDB", level: 80, icon: SiMongodb },
-    { skill: "Express.js", level: 87, icon: SiExpress },
-    { skill: "CSS/Tailwind", level: 95, icon: FaCss3Alt }
-  ];
+  // Map backend skills to component format
+  const technicalSkills =
+    about.technicalSkills?.map((skill) => ({
+      skill: skill.skill,
+      level: skill.level,
+      icon: getIconComponent(skill.icon),
+    })) || [];
 
-  // Tools & Technologies
-  const tools = [
-    { icon: SiGit, label: "Git & GitHub" },
-    { icon: SiFigma, label: "Figma" },
-    { icon: SiPostman, label: "Postman" },
-    { icon: SiVercel, label: "Vercel" },
-    { icon: SiNetlify, label: "Netlify" },
-    { icon: SiFirebase, label: "Firebase" },
-  ];
+  // Map backend tools to component format
+  const tools =
+    about.tools?.map((tool) => ({
+      icon: getIconComponent(tool.icon),
+      label: tool.title,
+    })) || [];
 
-  // Timeline Data
-  const timelineData = [
-    {
-      year: "2021",
-      title: "Started Web Development Journey",
-      description: "Began with HTML, CSS, and JavaScript fundamentals. Built first responsive websites."
-    },
-    {
-      year: "2022",
-      title: "Full-Stack Development Focus",
-      description: "Mastered React ecosystem, Node.js, and REST APIs. Completed multiple full-stack projects."
-    },
-    {
-      year: "2023",
-      title: "Advanced Development & Team Projects",
-      description: "Led 6+ collaborative projects, implemented complex features, and optimized performance."
-    },
-    {
-      year: "2024",
-      title: "Professional Growth & Specialization",
-      description: "Focus on scalable architecture, TypeScript, and advanced UI/UX patterns."
-    }
-  ];
+  // Map backend timeline to component format
+  const timelineData =
+    about.timeline?.map((item) => ({
+      year: item.year,
+      title: item.title,
+      description: item.description,
+      company: item.company,
+      type: item.type,
+    })) || [];
 
-  // Core Values
-  const coreValues = [
-    {
-      icon: FaLightbulb,
-      title: "Innovation",
-      description: "Always exploring new technologies and approaches"
-    },
-    {
-      icon: FaChartLine,
-      title: "Performance",
-      description: "Optimized solutions for speed and efficiency"
-    },
-    {
-      icon: FaPalette,
-      title: "Design Excellence",
-      description: "Beautiful, intuitive user experiences"
-    },
-    {
-      icon: FaHandshake,
-      title: "Collaboration",
-      description: "Effective teamwork and communication"
-    }
-  ];
-
-  const LinkBtn = motion(Link)
+  const LinkBtn = motion(Link);
 
   return (
     <section className="min-h-screen">
-      <div className="max-w-7xl mx-auto pt-10">
+      <div className="max-w-7xl mx-auto pt-10 px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -174,25 +145,41 @@ const About = () => {
           className="text-center mb-16"
         >
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-dark">Me</span>
+            About{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-dark">
+              Me
+            </span>
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Full-Stack Developer passionate about creating exceptional digital experiences
+            {about.currentFocus ||
+              "Full-Stack Developer passionate about creating exceptional digital experiences"}
           </p>
         </motion.div>
 
         {/* Tabs Navigation */}
-        <div className="flex flex-wrap justify-center gap-4 mb-10 sticky top-20 z-1">
-          <TabButton active={activeTab === "overview"} onClick={() => setActiveTab("overview")}>
+        <div className="flex flex-wrap justify-center gap-4 mb-10 sticky top-20 z-10 backdrop-blur-sm py-4">
+          <TabButton
+            active={activeTab === "overview"}
+            onClick={() => setActiveTab("overview")}
+          >
             Overview
           </TabButton>
-          <TabButton active={activeTab === "skills"} onClick={() => setActiveTab("skills")}>
+          <TabButton
+            active={activeTab === "skills"}
+            onClick={() => setActiveTab("skills")}
+          >
             Skills
           </TabButton>
-          <TabButton active={activeTab === "journey"} onClick={() => setActiveTab("journey")}>
+          <TabButton
+            active={activeTab === "journey"}
+            onClick={() => setActiveTab("journey")}
+          >
             Journey
           </TabButton>
-          <TabButton active={activeTab === "tools"} onClick={() => setActiveTab("tools")}>
+          <TabButton
+            active={activeTab === "tools"}
+            onClick={() => setActiveTab("tools")}
+          >
             Tools
           </TabButton>
         </div>
@@ -212,35 +199,49 @@ const About = () => {
               <div className="relative mb-8">
                 <div className="absolute inset-0 bg-gradient-to-r from-brand to-brand-dark rounded-3xl blur-xl opacity-20" />
                 <img
-                  src={profile}
-                  alt="Felix Vincent"
+                  src={about.avatar || profile}
+                  alt={about.name || "Felix Vincent"}
                   className="relative w-48 h-48 mx-auto rounded-2xl object-cover border-4 border-brand shadow-2xl"
                 />
               </div>
-              
+
               {/* Profile Info */}
               <div className="text-center">
-                <h2 className="text-3xl font-bold mb-2">Felix Vincent</h2>
+                <h2 className="text-3xl font-bold mb-2">
+                  {about.name || "Felix Vincent"}
+                </h2>
                 <div className="inline-flex items-center gap-2 bg-gradient-to-r from-brand/20 to-brand-dark/20 px-4 py-2 rounded-full mb-4 border border-brand text-sm">
                   <FaCode className="text-brand text-xl" />
-                  <span className="font-semibold">Full-Stack Developer</span>
+                  <span className="font-semibold">
+                    {about.role || "Full-Stack Developer"}
+                  </span>
                 </div>
-                
-                <p className="text-gray-400 leading-relaxed mb-6">
-                  I specialize in building modern web applications with React, Node.js, and cloud technologies. 
-                  Passionate about clean code, intuitive design, and scalable architecture.
-                </p>
-                
+
+                {/* Bio */}
+                {about.bio && about.bio.length > 0 && (
+                  <div className="space-y-3 mb-6">
+                    {about.bio.map((paragraph, index) => (
+                      <p key={index} className="text-gray-400 leading-relaxed">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                )}
+
                 {/* Quick Info */}
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <FaMapPin className="text-brand" />
-                    <span>Based in Lagos, Nigeria</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <FaMobileAlt className="text-brand" />
-                    <span>Available for remote work</span>
-                  </div>
+                  {about.location && (
+                    <div className="flex items-center gap-3">
+                      <FaMapPin className="text-brand" />
+                      <span>Based in {about.location}</span>
+                    </div>
+                  )}
+                  {about.availability && (
+                    <div className="flex items-center gap-3">
+                      <FaMobileAlt className="text-brand" />
+                      <span>{about.availability}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -248,7 +249,7 @@ const About = () => {
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-4">
               {professionalStats.map((stat, index) => (
-                <StatCard key={index} size='md' {...stat} />
+                <StatCard key={index} size="md" {...stat} />
               ))}
             </div>
           </div>
@@ -264,12 +265,18 @@ const About = () => {
             >
               {/* Overview Tab */}
               {activeTab === "overview" && (
-                <Overview coreValues={coreValues} />
+                <Overview
+                  coreValues={about.coreValues || []}
+                  developmentPhilosophy={about.developmentPhilosophy || []}
+                />
               )}
 
               {/* Skills Tab */}
               {activeTab === "skills" && (
-                <Skills technicalSkills={technicalSkills} />
+                <Skills
+                  technicalSkills={technicalSkills}
+                  specializations={about.specializations || []}
+                />
               )}
 
               {/* Journey Tab */}
@@ -278,9 +285,7 @@ const About = () => {
               )}
 
               {/* Tools Tab */}
-              {activeTab === "tools" && (
-                <Tools tools={tools} />
-              )}
+              {activeTab === "tools" && <Tools tools={tools} />}
             </motion.div>
 
             {/* Call to Action */}
@@ -300,6 +305,40 @@ const About = () => {
       </div>
     </section>
   );
+};
+
+// Helper function to map icon strings to components
+const getIconComponent = (iconName) => {
+  const iconMap = {
+    FaReact: FaReact,
+    FaNodeJs: FaNodeJs,
+    FaJs: FaJs,
+    FaCss3Alt: FaCss3Alt,
+    FaDatabase: FaDatabase,
+    FaCode: FaCode,
+    FaServer: FaServer,
+    FaRocket: FaRocket,
+    SiNextdotjs: SiNextdotjs,
+    SiMongodb: SiMongodb,
+    SiExpress: SiExpress,
+    SiTypescript: SiTypescript,
+    SiTailwindcss: SiTailwindcss,
+    SiRedux: SiRedux,
+    SiFirebase: SiFirebase,
+    SiDocker: SiDocker,
+    SiGit: SiGit,
+    SiFigma: SiFigma,
+    SiJest: SiJest,
+    SiPostman: SiPostman,
+    SiVercel: SiVercel,
+    SiNetlify: SiNetlify,
+    FaPalette: FaPalette,
+    FaChartLine: FaChartLine,
+    FaHandshake: FaHandshake,
+    FaLightbulb: FaLightbulb,
+  };
+
+  return iconMap[iconName] || FaCode;
 };
 
 export default About;

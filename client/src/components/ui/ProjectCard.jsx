@@ -36,7 +36,7 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
         {tech.slice(0, 4).map((t, i) => (
           <span
             key={i}
-            className="px-3 py-1.5 text-xs font-medium bg-white/5 text-gray-300 rounded-lg border border-gray-700/50 flex items-center gap-1.5">
+            className="px-3 py-1.5 text-xs font-medium bg-white/5 text-gray-300 rounded-lg border border-ring flex items-center text-gray-400 gap-1.5">
             {t.icon && (
               <img
                 src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${t.icon}/${t.icon}-original.svg`}
@@ -64,12 +64,12 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => setOpen(true)}
-          className="group relative bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-800/50 flex flex-col cursor-pointer h-full"
+          className="group relative bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-800/50 flex flex-col cursor-pointer h-full border border-input"
         >
           {/* Featured Badge */}
           {featured && (
             <div className="absolute top-4 left-4 z-10">
-              <div className="flex items-center gap-1 bg-gradient-to-r from-yellow-500 to-orange-500 text-foregroud px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
+              <div className="flex items-center gap-1 bg-gradient-to-r from-yellow-500 to-orange-500 px-3 py-1 rounded-full text-xs font-semibold shadow-lg text-white">
                 <LuStar className="text-xs" />
                 Featured
               </div>
@@ -79,7 +79,7 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
           {/* Category Badge */}
           {category && (
             <div className="absolute top-4 right-4 z-10">
-              <div className="bg-brand text-foregroud px-3 py-1 rounded-full text-xs font-semibold">
+              <div className="bg-brand text-white px-3 py-1 rounded-full text-xs font-semibold">
                 {category}
               </div>
             </div>
@@ -146,7 +146,7 @@ const ProjectCard = ({ project, viewMode = "grid" }) => {
             )}
 
             {/* Footer */}
-            <div className="flex items-center justify-between pt-4 border-t border-gray-800/50 mt-auto">
+            <div className="flex items-center justify-between pt-4 border-t border-input mt-auto">
               <span className={`text-xs font-semibold px-3 py-1.5 rounded-full ${
                 status === "Completed"
                   ? "bg-green-500/10 text-green-400 border border-green-500/30"
