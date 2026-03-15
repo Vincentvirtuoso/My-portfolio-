@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 // Setup CORS
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174","https://my-portfolio-admin-fxoq.onrender.com", "https://splenddev-portfolio.onrender.com" ];
 
 app.use(
   cors({
