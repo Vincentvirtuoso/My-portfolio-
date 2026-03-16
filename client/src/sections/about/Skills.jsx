@@ -2,7 +2,7 @@ import React from "react";
 import { FaTools, FaServer, FaPalette } from "react-icons/fa";
 import SkillProgress from "../../components/common/SkillProgress";
 import { motion } from "framer-motion";
-import IconRenderer from "../../../../admin/src/components/common/IconRenderer";
+import IconRenderer from "../../components/common/IconRenderer";
 
 const Skills = ({ technicalSkills, specializations }) => {
   return (
