@@ -36,6 +36,7 @@ const SkillProgress = ({
   showCategories = true,
   className = "",
   availableCategories = [],
+  heading = "Skill"
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
@@ -213,7 +214,7 @@ const SkillProgress = ({
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="font-heading font-semibold text-foreground">
-              Edit Skill
+              Edit {heading}
             </h3>
             <div className="flex items-center gap-1">
               {onDelete && (
@@ -238,7 +239,7 @@ const SkillProgress = ({
           {/* Skill Name Input */}
           <div className="space-y-1">
             <label className="text-sm font-medium text-muted-foreground">
-              Skill Name
+              {heading} Name
             </label>
             <input
               type="text"
