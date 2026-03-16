@@ -365,8 +365,9 @@ const Skills = () => {
             {filteredSkills.length > 0 ? (
               filteredSkills.map((skill, index) => (
                 <SkillProgress
-                  key={index}
+                  key={skill._id || index}
                   {...skill}
+                  title={skill.skill}
                   isEditable
                   size="sm"
                   onLevelChange={handleLevelChange}
@@ -493,7 +494,7 @@ const Skills = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {tools.map((tool, index) => (
                 <SkillProgress
-                  key={index}
+                  key={tool._id || index}
                   isEditable
                   {...tool}
                   size="sm"
