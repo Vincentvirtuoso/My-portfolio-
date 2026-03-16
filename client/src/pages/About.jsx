@@ -112,7 +112,7 @@ const About = () => {
     about.technicalSkills?.map((skill) => ({
       skill: skill.skill,
       level: skill.level,
-      icon: getIconComponent(skill.icon),
+      icon: skill.icon,
     })) || [];
 
   // Map backend tools to component format
@@ -201,7 +201,7 @@ const About = () => {
                 <img
                   src={about.avatar || profile}
                   alt={about.name || "Felix Vincent"}
-                  className="relative w-48 h-48 mx-auto rounded-2xl object-cover border-4 border-brand shadow-2xl"
+                  className="relative w-48 h-48 mx-auto rounded-full object-cover border-4 border-brand shadow-2xl"
                 />
               </div>
 

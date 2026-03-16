@@ -1,12 +1,8 @@
-// pages/Skills.jsx
 import React, { useState, useEffect } from "react";
 import {
   LuPlus as Plus,
   LuPen as Edit2,
   LuTrash2 as Trash2,
-  LuGripVertical as GripVertical,
-  LuChevronUp as ChevronUp,
-  LuChevronDown as ChevronDown,
   LuLoader,
   LuSave,
   LuX,
@@ -14,40 +10,21 @@ import {
   LuWrench,
   LuCode,
   LuPalette,
-  LuDatabase,
-  LuCpu,
   LuGlobe,
   LuServer,
 } from "react-icons/lu";
+import { FaHtml5 } from "react-icons/fa";
 import { useAbout } from "../hooks/useAbout";
 import SkillProgress from "../components/ui/SkillProgress";
 import Spinner from "../components/loaders/Spinner";
-
-// Icon mapping for better visual representation
-const iconMap = {
-  "⚛️": <span className="text-2xl">⚛️</span>,
-  "🟢": <span className="text-2xl">🟢</span>,
-  "🔷": <span className="text-2xl">🔷</span>,
-  "📘": <span className="text-2xl">📘</span>,
-  "🐍": <span className="text-2xl">🐍</span>,
-  "🔗": <span className="text-2xl">🔗</span>,
-  "🎨": <span className="text-2xl">🎨</span>,
-  "🍃": <span className="text-2xl">🍃</span>,
-  react: <LuCode className="text-blue-400" size={24} />,
-  nodejs: <LuServer className="text-green-500" size={24} />,
-  solidity: <LuCpu className="text-purple-500" size={24} />,
-  typescript: <LuCode className="text-blue-600" size={24} />,
-  python: <LuCode className="text-yellow-500" size={24} />,
-  tailwind: <LuPalette className="text-cyan-500" size={24} />,
-  mongodb: <LuDatabase className="text-green-600" size={24} />,
-};
+import IconRenderer from "../components/common/IconRenderer";
+import EmptyState from "../components/common/EmptyState";
 
 const Skills = () => {
   const {
     about,
     loading,
     error,
-    updateAbout,
     addArrayItem,
     updateArrayItem,
     deleteArrayItem,
@@ -66,6 +43,7 @@ const Skills = () => {
   const [modalType, setModalType] = useState(null);
   const [formData, setFormData] = useState({});
   const [saving, setSaving] = useState(false);
+  const [currentSkillString, setCurrentSkillString] = useState("");
 
   // Update local state when about data loads
   useEffect(() => {
@@ -76,34 +54,34 @@ const Skills = () => {
       setDevelopmentPhilosophy(about.developmentPhilosophy || []);
 
       // Transform services from specializations or create default
-      const defaultServices = [
-        {
-          id: 1,
-          title: "Full-Stack Development",
-          description:
-            "End-to-end web application development using modern technologies",
-          price: "Starting at $5000",
-        },
-        {
-          id: 2,
-          title: "Smart Contract Development",
-          description: "Secure and efficient smart contracts for DeFi and NFTs",
-          price: "Starting at $8000",
-        },
-        {
-          id: 3,
-          title: "Web3 Integration",
-          description: "Connect your dApp to blockchain networks",
-          price: "Starting at $3000",
-        },
-        {
-          id: 4,
-          title: "Technical Consulting",
-          description: "Expert advice on architecture and technology stack",
-          price: "$150/hour",
-        },
-      ];
-      setServices(defaultServices);
+      // const defaultServices = [
+      //   {
+      //     id: 1,
+      //     title: "Full-Stack Development",
+      //     description:
+      //       "End-to-end web application development using modern technologies",
+      //     price: "Starting at $5000",
+      //   },
+      //   {
+      //     id: 2,
+      //     title: "Smart Contract Development",
+      //     description: "Secure and efficient smart contracts for DeFi and NFTs",
+      //     price: "Starting at $8000",
+      //   },
+      //   {
+      //     id: 3,
+      //     title: "Web3 Integration",
+      //     description: "Connect your dApp to blockchain networks",
+      //     price: "Starting at $3000",
+      //   },
+      //   {
+      //     id: 4,
+      //     title: "Technical Consulting",
+      //     description: "Expert advice on architecture and technology stack",
+      //     price: "$150/hour",
+      //   },
+      // ];
+      setServices(about.services || []);
     }
   }, [about]);
 
@@ -116,6 +94,23 @@ const Skills = () => {
     "Database",
   ];
 
+  const [inputValue, setInputValue] = useState(
+    formData.items?.join(", ") || "",
+  );
+
+  useEffect(() => {
+    setInputValue(formData.items?.join(", ") || "");
+  }, [formData.items]);
+
+  const handleBlur = () => {
+    const itemsArray = inputValue
+      .split(",")
+      .map((i) => i.trim())
+      .filter((i) => i !== "");
+
+    setFormData({ ...formData, items: itemsArray });
+  };
+
   const tabs = [
     { id: "skills", label: "Technical Skills", icon: LuCode },
     { id: "specializations", label: "Specializations", icon: LuGlobe },
@@ -124,28 +119,11 @@ const Skills = () => {
     { id: "services", label: "Services", icon: LuServer },
   ];
 
-  const filteredSkills =
-    activeCategory === "All"
-      ? skills
-      : skills.filter((skill) => {
-          // Map categories based on skill name or create logic
-          const skillCategory =
-            skill.name?.toLowerCase().includes("react") ||
-            skill.name?.toLowerCase().includes("tailwind")
-              ? "Frontend"
-              : skill.name?.toLowerCase().includes("node")
-                ? "Backend"
-                : skill.name?.toLowerCase().includes("solidity") ||
-                    skill.name?.toLowerCase().includes("ethers")
-                  ? "Web3"
-                  : skill.name?.toLowerCase().includes("type") ||
-                      skill.name?.toLowerCase().includes("python")
-                    ? "Languages"
-                    : skill.name?.toLowerCase().includes("mongo")
-                      ? "Database"
-                      : "Other";
-          return skillCategory === activeCategory;
-        });
+  const filteredSkills = skills.filter((skill) => {
+    if (activeCategory === "All") return true;
+
+    return skill.categories?.includes(activeCategory);
+  });
 
   const handleLevelChange = async (id, newLevel) => {
     const index = skills.findIndex((s) => s._id === id || s.id === id);
@@ -204,7 +182,7 @@ const Skills = () => {
           await addArrayItem("developmentPhilosophy", formData);
           break;
         case "service":
-          // Handle services separately or add to another collection
+          await addArrayItem("services", formData);
           setServices((prev) => [...prev, { ...formData, id: Date.now() }]);
           break;
       }
@@ -246,6 +224,7 @@ const Skills = () => {
           );
           break;
         case "service":
+          await updateArrayItem("services", editingItem.index, formData);
           setServices((prev) =>
             prev.map((s, i) =>
               i === editingItem.index ? { ...formData, id: s.id } : s,
@@ -317,7 +296,7 @@ const Skills = () => {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-6 ">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
           Skills & Expertise
@@ -382,10 +361,22 @@ const Skills = () => {
           </div>
 
           {/* Skills List */}
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredSkills.length > 0 ? (
               filteredSkills.map((skill, index) => (
-                <SkillProgress key={index} {...skill} />
+                <SkillProgress
+                  key={index}
+                  {...skill}
+                  isEditable
+                  size="sm"
+                  onLevelChange={handleLevelChange}
+                  onSave={async (data) => {
+                    await updateArrayItem("technicalSkills", index, data);
+                  }}
+                  onDelete={async () => {
+                    await deleteArrayItem("technicalSkills", index);
+                  }}
+                />
               ))
             ) : (
               <p className="text-center text-gray-500 dark:text-gray-400 py-8">
@@ -420,7 +411,10 @@ const Skills = () => {
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center space-x-3">
-                    <span className="text-2xl">{spec.icon}</span>
+                    <IconRenderer
+                      iconName={spec.icon}
+                      className="text-2xl shrink-0"
+                    />
                     <div>
                       <h3 className="font-semibold text-gray-800 dark:text-white">
                         {spec.title}
@@ -447,7 +441,7 @@ const Skills = () => {
                     </button>
                   </div>
                 </div>
-                <ul className="space-y-1">
+                <ul className="flex gap-2 flex-wrap">
                   {spec.items?.map((item, i) => (
                     <li
                       key={i}
@@ -480,33 +474,36 @@ const Skills = () => {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {tools.map((tool, index) => (
-              <div
-                key={index}
-                className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg text-center group relative"
-              >
-                <span className="text-3xl mb-2 block">{tool.icon}</span>
-                <p className="text-sm font-medium text-gray-800 dark:text-white">
-                  {tool.label}
-                </p>
-                <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={() => handleEditItem("tool", tool, index)}
-                    className="p-1 bg-white dark:bg-gray-800 rounded shadow-sm hover:text-purple-600"
-                  >
-                    <Edit2 size={12} />
-                  </button>
-                  <button
-                    onClick={() => handleDeleteItem("tool", index)}
-                    className="p-1 bg-white dark:bg-gray-800 rounded shadow-sm hover:text-red-600"
-                  >
-                    <Trash2 size={12} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+          {tools?.length === 0 ? (
+            <EmptyState
+              icon={LuWrench}
+              title="No tools found"
+              description="Get started by adding your first tool"
+              action={
+                <button
+                  onClick={() => handleAddItem("tool")}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-brand text-primary-foreground rounded-lg hover:bg-brand-dark transition-colors text-sm"
+                >
+                  <Plus size={16} />
+                  Add Your First Tool
+                </button>
+              }
+            />
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {tools.map((tool, index) => (
+                <SkillProgress
+                  key={index}
+                  isEditable
+                  {...tool}
+                  size="sm"
+                  skill={tool.title}
+                  useIcon
+                  showStars={false}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -679,6 +676,26 @@ const Skills = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Category
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Frontend, Web3"
+                      value={currentSkillString}
+                      onChange={(e) => setCurrentSkillString(e.target.value)}
+                      onBlur={() => {
+                        const categoryArray = currentSkillString
+                          .split(",")
+                          .map((cat) => cat.trim())
+                          .filter((cat) => cat !== "");
+
+                        setFormData({ ...formData, categories: categoryArray });
+                      }}
+                      className="bg-card border-border text-foreground p-2 rounded-md"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Icon (emoji or name)
                     </label>
                     <input
@@ -744,16 +761,9 @@ const Skills = () => {
                     </label>
                     <input
                       type="text"
-                      value={formData.items?.join(", ") || ""}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          items: e.target.value
-                            .split(",")
-                            .map((i) => i.trim())
-                            .filter((i) => i),
-                        })
-                      }
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onBlur={handleBlur}
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="React, Vue, Angular"
                     />
@@ -769,14 +779,15 @@ const Skills = () => {
                     </label>
                     <input
                       type="text"
-                      value={formData.label || ""}
+                      value={formData.title || ""}
                       onChange={(e) =>
-                        setFormData({ ...formData, label: e.target.value })
+                        setFormData({ ...formData, title: e.target.value })
                       }
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="e.g., VS Code"
                     />
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Icon
@@ -789,6 +800,29 @@ const Skills = () => {
                       }
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="🔧"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Level ({formData.level ?? 0}/100)
+                    </label>
+
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={formData.level ?? 0}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          level: Number(e.target.value),
+                        })
+                      }
+                      className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer"
+                      style={{
+                        background: `linear-gradient(to right, var(--primary) 0%, var(--primary) ${formData.level}%, var(--muted) ${formData.level}%, var(--muted) 100%)`,
+                      }}
                     />
                   </div>
                 </>

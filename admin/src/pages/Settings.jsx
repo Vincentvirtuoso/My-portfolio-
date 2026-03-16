@@ -18,7 +18,6 @@ import { useAuth } from "../context/AuthContext";
 import Spinner from "../components/loaders/Spinner";
 
 const Settings = () => {
-  const { user } = useAuth();
   const { about, loading: aboutLoading, updateAbout, fetchAbout } = useAbout();
 
   const {
@@ -88,7 +87,7 @@ const Settings = () => {
         name: about.name || "",
         role: about.role || "",
         bio: about.bio || [],
-        email: user?.email || "",
+        email: about.email || "",
         location: about.location || "",
         avatar: about.avatar || "",
         availability: about.availability || "",
@@ -113,7 +112,7 @@ const Settings = () => {
         linkedin: about.socialLinks?.linkedin || "",
       });
     }
-  }, []);
+  }, [about]);
 
   // Update local state when settings data loads
   useEffect(() => {
@@ -193,6 +192,7 @@ const Settings = () => {
         name: profile.name,
         role: profile.role,
         bio: profile.bio,
+        email: profile.email,
         location: profile.location,
         avatar: profile.avatar,
         availability: profile.availability,
@@ -227,10 +227,8 @@ const Settings = () => {
 
   if (isLoading) {
     return (
-      <div className="p-6 max-w-4xl mx-auto flex items-center justify-center min-h-[400px]">
-        <div className="text-gray-600 dark:text-gray-400">
-          Loading settings...
-        </div>
+      <div className="p-6 max-w-4xl mx-auto flex items-center justify-center min-h-[calc(100vh-100px)]">
+        <Spinner />
       </div>
     );
   }

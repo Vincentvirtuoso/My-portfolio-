@@ -4,6 +4,7 @@ const AboutSchema = new mongoose.Schema({
   // ─── Basic Info ───────────────────────────────────────────────
   name: { type: String, required: true, default: "Felix Vincent" },
   role: { type: String, required: true },
+  email: { type: String, required: true },
   bio: [{ type: String, required: true }],
   location: { type: String, default: "Lagos, Nigeria" },
   avatar: { type: String },
@@ -33,7 +34,7 @@ const AboutSchema = new mongoose.Schema({
       skill: { type: String, required: true },
       level: { type: Number, required: true, min: 0, max: 100 },
       icon: { type: String },
-      category: { type: String, default: "General" },
+      categories: { type: [String], default: [] },
     },
   ],
 
@@ -72,6 +73,15 @@ const AboutSchema = new mongoose.Schema({
     {
       icon: { type: String, required: true },
       title: { type: String, required: true },
+      level: { type: Number, required: true, min: 0, max: 100 },
+    },
+  ],
+
+  services: [
+    {
+      title: { type: String, required: true },
+      description: { type: String, required: true },
+      price: { type: String },
     },
   ],
 
