@@ -500,6 +500,13 @@ const Skills = () => {
                   skill={tool.title}
                   useIcon
                   showStars={false}
+                  onSave={async (data) => {
+                    await updateArrayItem("tools", index, data);
+                  }}
+                  onDelete={async () => {
+                    await deleteArrayItem("tools", index);
+                  }}
+                  heading="Tool"
                 />
               ))}
             </div>
