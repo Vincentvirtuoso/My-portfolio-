@@ -491,14 +491,13 @@ const Skills = () => {
               }
             />
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {tools.map((tool, index) => (
                 <SkillProgress
                   key={tool._id || index}
                   isEditable
                   {...tool}
                   size="sm"
-                  skill={tool.title}
                   useIcon
                   showStars={false}
                   onSave={async (data) => {
