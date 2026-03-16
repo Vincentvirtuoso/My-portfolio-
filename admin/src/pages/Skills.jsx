@@ -507,6 +507,7 @@ const Skills = () => {
                     await deleteArrayItem("tools", index);
                   }}
                   heading="Tool"
+                  showCategories={false}
                 />
               ))}
             </div>
