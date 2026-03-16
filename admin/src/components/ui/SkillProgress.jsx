@@ -14,6 +14,7 @@ import {
   LuTrash2 as Trash,
   LuStarHalf,
   LuStar,
+  LuBlocks,
 } from "react-icons/lu";
 import IconRenderer from "../common/IconRenderer";
 
@@ -57,6 +58,7 @@ const SkillProgress = ({
       terminal: Terminal,
       globe: Globe,
       cpu: Cpu,
+      web3: LuBlocks,
     };
 
     if (editData.icon && iconMap[editData.icon.toLowerCase()]) {
