@@ -18,7 +18,7 @@ import {
 import IconRenderer from "../common/IconRenderer";
 
 const SkillProgress = ({
-  skill,
+  title,
   level,
   icon,
   categories = [],
@@ -40,23 +40,13 @@ const SkillProgress = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
-    skill: skill || "",
+    title: title || "",
     level: level || 0,
     icon: icon || "",
     categories: categories || [],
   });
   const [newCategory, setNewCategory] = useState("");
   const skillId = _id || id;
-
-  // Update edit data when props change
-  useEffect(() => {
-    setEditData({
-      skill: skill || "",
-      level: level || 0,
-      icon: icon || "",
-      categories: categories || [],
-    });
-  }, [skill, level, icon, categories]);
 
   // Get icon component based on icon name or default based on category
   const getIconComponent = () => {
@@ -179,7 +169,7 @@ const SkillProgress = ({
 
   const handleCancel = () => {
     setEditData({
-      skill: skill || "",
+      title: title || "",
       level: level || 0,
       icon: icon || "",
       categories: categories || [],
@@ -243,11 +233,11 @@ const SkillProgress = ({
             </label>
             <input
               type="text"
-              value={editData.skill}
-              onChange={(e) => handleFieldChange("skill", e.target.value)}
+              value={editData.title}
+              onChange={(e) => handleFieldChange("title", e.target.value)}
               onKeyDown={handleKeyPress}
               className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-brand"
-              placeholder="Enter skill name"
+              placeholder="Enter name"
               autoFocus
             />
           </div>
@@ -402,13 +392,21 @@ const SkillProgress = ({
               ${currentSize.title}
             `}
             >
-              {skill}
+              {title}
             </h3>
 
             {/* Edit Button */}
             {isEditable && (
               <button
-                onClick={() => setIsEditing(true)}
+                onClick={() => {
+                 setEditData({
+                  title,
+                  level,
+                  icon,
+                  categories
+                 });
+                 setIsEditing(true);
+                }}
                 className={`${currentSize.button} text-muted-foreground hover:text-brand rounded-lg hover:bg-muted/50 transition-colors`}
                 aria-label="Edit skill"
               >
