@@ -3,49 +3,118 @@ import { LuWrench } from "react-icons/lu";
 
 const MaintenanceScreen = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-6 selection:bg-brand/30">
-      {/* Background Decor: Subtle Brand Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-brand/10 blur-[120px] rounded-full pointer-events-none" />
+    <main className="relative min-h-screen overflow-hidden bg-background text-foreground flex items-center justify-center px-6 selection:bg-brand/20">
+      {/* Ambient background */}
+      <div
+        aria-hidden
+        className="
+          absolute left-1/2 top-1/2
+          h-72 w-72 -translate-x-1/2 -translate-y-1/2
+          rounded-full bg-brand/5 blur-[110px]
+          pointer-events-none
+        "
+      />
 
-      <div className="max-w-md w-full text-center z-10">
-        <div className="relative mb-10 w-16 h-16 mx-auto">
-          {/* Soft breathing ring behind the icon — slow, quiet, no bounce */}
-          <div
-            className="absolute inset-0 rounded-full bg-brand/10 animate-[pulse_3s_ease-in-out_infinite]"
-            aria-hidden="true"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <LuWrench
-              size={28}
-              strokeWidth={1.5}
-              className="text-brand animate-[spin_6s_linear_infinite]"
+      {/* Subtle grid */}
+      <div
+        aria-hidden
+        className="
+          absolute inset-0 opacity-[0.025]
+          bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)]
+          bg-[size:48px_48px]
+          pointer-events-none
+        "
+      />
+
+      <section className="relative z-10 w-full max-w-lg text-center">
+        {/* Status mark */}
+        <div className="mb-10 flex justify-center">
+          <div className="relative flex h-20 w-20 items-center justify-center">
+            {/* Orbit ring */}
+            <div
+              aria-hidden
+              className="
+                absolute inset-0 rounded-full
+                border border-border/60
+              "
             />
+
+            <div
+              aria-hidden
+              className="
+                absolute inset-1 rounded-full
+                border border-brand/10
+                animate-[spin_18s_linear_infinite]
+              "
+            >
+              <span className="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-brand/60" />
+            </div>
+
+            {/* Icon */}
+            <div
+              className="
+                relative flex h-12 w-12 items-center justify-center
+                rounded-full border border-brand/20
+                bg-surface
+                text-brand
+                shadow-[0_0_40px_rgba(var(--kui-brand),0.08)]
+              "
+            >
+              <LuWrench
+                size={22}
+                strokeWidth={1.6}
+                className="animate-[maintenance-tool_4s_ease-in-out_infinite]"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Brand Identity & Status */}
-        <p className="text-xs font-medium tracking-[0.2em] text-brand mb-3">
+        {/* Identity */}
+        <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.32em] text-brand">
           Splendid Developer
         </p>
 
-        <h1 className="text-3xl font-heading font-semibold mb-4 tracking-tight">
-          Site under maintenance
+        <h1 className="mb-5 font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+          A little work in progress.
         </h1>
 
-        <p className="text-muted-foreground leading-relaxed">
-          I'm making improvements to the portfolio and adding recent work.
-          Everything will be back shortly — thanks for your patience.
+        <p className="mx-auto max-w-md text-sm leading-7 text-muted-foreground sm:text-base">
+          I'm refining the portfolio, polishing a few projects, and making
+          some improvements behind the scenes. Everything will be back online
+          shortly.
         </p>
 
         {/* Divider */}
-        <div className="h-px w-12 bg-border mx-auto my-8" />
+        <div className="mx-auto my-9 h-px w-10 bg-border" />
 
-        <p className="text-xs text-muted-foreground opacity-70">
-          Estimated downtime:{" "}
-          <span className="text-foreground font-medium">15 minutes</span>
-        </p>
-      </div>
-    </div>
+        {/* Status */}
+        <div className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand/40" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
+          </span>
+
+          <span>Maintenance in progress</span>
+        </div>
+      </section>
+
+      <style>{`
+        @keyframes maintenance-tool {
+          0%,
+          100% {
+            transform: rotate(0deg);
+          }
+
+          45% {
+            transform: rotate(-8deg);
+          }
+
+          55% {
+            transform: rotate(-8deg);
+          }
+        }
+      `}</style>
+    </main>
   );
 };
 
