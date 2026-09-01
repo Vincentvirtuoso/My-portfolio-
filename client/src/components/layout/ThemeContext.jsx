@@ -9,16 +9,14 @@ import {
 const ThemeContext = createContext(null);
 
 const getInitialTheme = () => {
-  if (typeof window === "undefined") return "light";
-
-  const stored = localStorage.getItem("theme");
-
-  if (stored === "dark" || stored === "light") {
-    return stored;
+  if (typeof window === "undefined") {
+    return "light";
   }
 
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
+  const theme = localStorage.getItem("theme");
+
+  return theme === "dark" || theme === "light"
+    ? theme
     : "light";
 };
 
