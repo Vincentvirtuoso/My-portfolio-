@@ -8,41 +8,41 @@ const MaintenanceScreen = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-brand/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-md w-full text-center z-10">
-        <div className="relative mb-8">
-          <div className="absolute inset-0 animate-pulse">
+        <div className="relative mb-10 w-16 h-16 mx-auto">
+          {/* Soft breathing ring behind the icon — slow, quiet, no bounce */}
+          <div
+            className="absolute inset-0 rounded-full bg-brand/10 animate-[pulse_3s_ease-in-out_infinite]"
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
             <LuWrench
-              size={80}
-              className="text-brand/20 mx-auto"
+              size={28}
               strokeWidth={1.5}
+              className="text-brand animate-[spin_6s_linear_infinite]"
             />
           </div>
-          <LuWrench
-            size={64}
-            className="text-brand mx-auto relative z-10 animate-bounce"
-            style={{ animationDuration: "2s" }}
-            strokeWidth={1.5}
-          />
         </div>
 
         {/* Brand Identity & Status */}
-        <h1 className="text-sm font-bold tracking-[0.3em] uppercase text-brand mb-2">
-          Splendid developer
+        <p className="text-xs font-medium tracking-[0.2em] text-brand mb-3">
+          Splendid Developer
+        </p>
+
+        <h1 className="text-3xl font-heading font-semibold mb-4 tracking-tight">
+          Site under maintenance
         </h1>
 
-        <h2 className="text-3xl font-heading font-semibold mb-4 tracking-tight">
-          Refining the Experience
-        </h2>
-
         <p className="text-muted-foreground leading-relaxed">
-          I'm currently updating my portfolio with new projects and
-          improvements. The site will be back online shortly.
+          I'm making improvements to the portfolio and adding recent work.
+          Everything will be back shortly — thanks for your patience.
         </p>
 
         {/* Divider */}
         <div className="h-px w-12 bg-border mx-auto my-8" />
 
-        <p className="text-[11px] uppercase tracking-widest text-muted-foreground opacity-60">
-          Estimated downtime: <span className="text-foreground">~15 mins</span>
+        <p className="text-xs text-muted-foreground opacity-70">
+          Estimated downtime:{" "}
+          <span className="text-foreground font-medium">15 minutes</span>
         </p>
       </div>
     </div>
