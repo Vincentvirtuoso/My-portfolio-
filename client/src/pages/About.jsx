@@ -136,7 +136,7 @@ const About = () => {
 
   return (
     <section className="min-h-screen">
-      <div className="max-w-7xl mx-auto pt-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto pt-2 px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
