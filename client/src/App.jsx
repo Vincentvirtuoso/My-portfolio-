@@ -6,7 +6,6 @@ import ScrollToTop from "./components/common/ScrollToTop";
 import MaintenanceScreen from "./components/common/MaintenanceScreen";
 import { useSettings } from "./context/SettingsContext";
 import Spinner from "./components/loaders/Spinner";
-import { ThemeProvider } from "./components/layout/ThemeContext";
 
 const App = () => {
   const { settings, loading, error } = useSettings();
@@ -45,7 +44,7 @@ const App = () => {
   }
 
   return (
-    <ThemeProvider>
+    <>
       {<Navbar />}
       <ScrollToTop />
       <main
@@ -58,7 +57,7 @@ const App = () => {
         </div>
       </main>
       <Footer />
-    </ThemeProvider>
+    </>
   );
 };
 
