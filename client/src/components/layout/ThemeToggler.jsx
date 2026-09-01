@@ -27,7 +27,7 @@ const ThemeToggler = () => {
           initial={{ opacity: 0, rotate: -30, scale: 0.8 }}
           animate={{ opacity: 1, rotate: 0, scale: 1 }}
           exit={{ opacity: 0, rotate: 30, scale: 0.8 }}
-          transition={{ duration: 0.18 }}
+          transition={{ duration: 0.18 
         >
           {isDark ? (
             <LuMoon size={17} />
@@ -39,3 +39,5 @@ const ThemeToggler = () => {
     </button>
   );
 };
+
+export default ThemeToggler;
