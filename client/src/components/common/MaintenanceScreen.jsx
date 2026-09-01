@@ -85,15 +85,10 @@ const MaintenanceScreen = () => {
         </p>
 
         {/* Divider */}
-        <div className="mx-auto my-9 h-px w-10 bg-border" />
+        <div className="mx-auto my-9 h-px w-20 bg-border" />
 
         {/* Status */}
         <div className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand/40" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
-          </span>
-
           <span>Maintenance in progress</span>
         </div>
       </section>
